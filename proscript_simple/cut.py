@@ -1,4 +1,5 @@
-# 对proscript原始数据集进行简化，仅预留"scenario"，"events","gold_edges_for_prediction"
+# 对proscript原始数据集进行简化，仅预留"scenario","events","gold_edges_for_prediction"
+
 import os
 import json
 

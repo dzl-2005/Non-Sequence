@@ -1,5 +1,5 @@
 # 调用API 修改 converted_dev.json等数据的逻辑错误
-# 已截取20条数据进行测试("../temp/temp.json)
+
 import json
 import os
 import time
@@ -18,8 +18,8 @@ client = OpenAI(
 # 设置目标输入和输出
 PROMPT_TEMPLATE_FILE = "correct/prompt_template.txt"
 INPUT_FILE = "convert/converted_dev.json"
-OUTPUT_FILE = "convert/llm_fixed_dev.json"
-CHANGE_LOG_FILE = "convert/change_logs.json"
+OUTPUT_FILE = "correct/llm_fixed_dev.json"
+CHANGE_LOG_FILE = "correct/change_logs.json"
 SAVE_INTERVAL = 10
 
 # 使用 DeepSeek V4 Flash 模型

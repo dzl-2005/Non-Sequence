@@ -3,11 +3,15 @@
 1. 除了顺序，选择，循环三种基础结构，这里再提出一种特殊结构：**同步汇合（AND-JOIN）**，这里说明放弃构建**并行**结构的原因：
    - 标注者需要凭空想象时间重叠关系，容易主观臆断。虽然现实中存在大量并行结构事件，但是这种平行的结构很多时候是可以人为解释为线性，例如吃早饭和读早报可以并行执行，也可以顺序解释：先吃饭后读早报，或先读早报后吃饭均可；
    - 缺乏时间戳证据的 `parallel` 在评估时无法验证，降低了数据的客观性
-2. **同步汇合（AND-JOIN）**是弱化了**同时性**，并结合了 **可交换（无序）** 特点的一种“并行”结构
-   - **无强依赖**，事件之间无明显的时间前后和因果关系，可同时执行，可以顺序执行，也可以执行事件A一段时间后，再执行事件B；简而言之，事件之间无序，排列自由度高
-   - **必须全部完成**，缺少任何一项，无法执行某一步骤，导致事件图不连通
-   - 简而言之：一组事件 **无强制顺序、允许任意交错或顺序执行**，但 **必须全部完成后才能进入下一事件**。它不要求事件同时开始，仅要求全部结束后的同步。
-3. 并且我们希望设定更困难的生成式任务：根据给定的无序事件集，模型需要自己正确判断事件之间的关系，生成完整的事件图（json文件），这里先给出人工生成的示例数据：
+2. **同步汇合（AND-JOIN）（修正版）**：
+
+- **同步汇合（AND-JOIN）**是弱化了**同时性**，并结合了**可交换（无序）** 特点的一种“并行”结构：
+  - **分支之间无强依赖**，分支(branches)之间没有无明显的时间前后或因果关系，可同时执行，可以顺序执行，也可以执行分支A一段时间后，再执行分支B；简而言之，分支之间无序，排列自由度高
+  - **各分支必须全部完成**，缺少任何一个分支，无法执行某一步骤，导致事件图不连通
+  - **各个分支内的事件有逻辑顺序**，A1->A2表示分支A上的事件A1比同分支上的A2先发生
+- 简而言之：多个分支（每个分支可包含多个时间） **无强制顺序、允许任意交错或顺序执行**，但 **必须全部完成后才能进入下一事件**。它不要求分支同时开始，仅要求全部结束后的同步
+
+3. 我们希望设定更困难的生成式任务：根据给定的无序事件集，模型需要自己正确判断事件之间的关系，生成完整的事件图（JSON文件），这里先给出人工生成的示例数据：
 
 ### 二、样本构建样例
 
@@ -216,16 +220,6 @@
   }
 }
 ```
-
-修改后的 **同步汇合(AND-JOIN)** 的定义如下：
-
-**同步汇合（AND-JOIN）**是弱化了**同时性**，并结合了**可交换（无序**特点的一种“并行”结构：
-
-- **分支之间无强依赖**，分支(branches)之间没有无明显的时间前后或因果关系，可同时执行，可以顺序执行，也可以执行分支A一段时间后，再执行分支B；简而言之，分支之间无序，排列自由度高
-- **各分支必须全部完成**，缺少任何一个分支，无法执行某一步骤，导致事件图不连通
-- **各个分支内的事件有逻辑顺序**，A1->A2表示分支A上的事件A1比同分支上的A2先发生
-
-简而言之：多个分支（每个分支可包含多个时间） **无强制顺序、允许任意交错或顺序执行**，但 **必须全部完成后才能进入下一事件**。它不要求分支同时开始，仅要求全部结束后的同步。
 
 4. **选择结构与嵌套**
 
@@ -474,12 +468,12 @@
    - 选择
      - 各选项可以包含任何结构，每个选项通常是一个`sequence`
      - **所有选型必须最终汇合到同一节点**
-     - 选项间**互斥**，且原则上需要存在较大差异性
+     - 选项间**互斥**，且原则上选项引出的路径需要存在较大差异性
      - **选项间无依赖边**，即 `edges` 中不能有跨选项的边（选项之间不连通）
    - 循环
-     - 结构组成：`entry`：循环入口，为单一节点；`retry`：循环体，为子事件链，通常是一个`sequence`，可以包含任意子结构；`exit`：循环出口，为单一节点
+     - 结构组成：`entry`：循环入口，必须是一个**可执行的动作节点或状态节点**，不能是决策/判断节点；`retry`：循环体，为子事件链，通常是一个`sequence`，可以包含任意子结构；`exit`：循环出口，为单一节点
      - 循环体逻辑上必须以 `entry` 节点开始；`retry` 链的最后一个元素必须是 **`"continue"`** ，且该序列执行完后必须能回到 `entry`；`exit` 节点必须**有边指向循环外部**的第一个节点
-     - 循环体内不应有其他路径能在不经过 `exit` 的情况下跳出循环
+     - 循环体内不应有其他路径能在不经过 `exit` 的情况下跳出循环，即不允许 `retry` 中有边指向`exit`
      - 受限于能力，数据结构暂时无法实现**计数类循环**
      - 构建循环体时应该避免无限循环
    - 同步汇合
@@ -497,7 +491,7 @@
    - 修正**scenario**与**unordered_nodes**中的拼写错误（仅修正明显的拼写错误，不得改变原有语义）。
    - 识别底层逻辑中**确实包含选择结构或循环结构**的条目。参照后续示例，修改此类条目的关联节点与脚本关系图（必要时允许修改节点信息），确保逻辑正确，并在修改记录中以「structure_changed」类型备注；若修改操作难以执行，则判定此类条目标注错误，将其从最终处理数据集中移除，并在修改记录中备注删除信息。
    - 对于其余所有条目，选择合适的脚本，通过添加事件节点（数量不宜过多，控制整体复杂度）以引入select 和 loop 结构，也可以修改原始事件节点含义具体，具体要求如下：
-     - 新增逻辑需自然合理，杜绝生硬堆砌；若无合适的选择 / 循环结构引入方案，条目可保持原样。
+     - 鼓励打开思维，但是新增逻辑需自然合理，杜绝生硬堆砌；若确实无合适的选择 / 循环结构引入方案，条目可保持原样。
      - 原则上选择结构的分支必须相互独立、逻辑差异显著（例如：选择筷子或勺子用餐这类细微差异，不太符合要求）。
      - 对于选择结构，所有选择分支的末端节点，必须统一关联至选择结构后的同一合并节点。
      - 循环结构必须设置明确的终止条件，禁止出现无限循环。
@@ -507,3 +501,278 @@
    - **注意事项**：以上所有操作需**一次性同步完成**，即对于一项数据，先修正拼写错误，再检查逻辑是否包含选择/循环结构，若包含则考虑是否修改，若不包含则考虑是否能引入
 
 ### 五、改造示例
+
+1. 在 `sequence` 中添加 `loop`
+
+   ```json
+   [
+     {
+       "id": 25,
+       "scenario": "buy a new necktie",
+       "unordered_nodes": {
+         "0": "Order the necktie",
+         "1": "Find a necktie",
+         "2": "Research some neckties",
+         "3": "Go to a necktie website",
+         "4": "Send the necktie to yourself",
+         "5": "buy a new necktie"
+       },
+       "edges": [
+         "2->3",
+         "3->1",
+         "1->0",
+         "0->4",
+         "4->5"
+       ],
+       "script_graph": {
+         "type": "sequence",
+         "script": [
+           "2",
+           "3",
+           "1",
+           "0",
+           "4",
+           "5"
+         ]
+       }
+     },
+     {
+       "id": 25,
+       "scenario": "buy a new necktie",
+       "unordered_nodes": {
+         "0": "Order the necktie",
+         "1": "Find a necktie",
+         "2": "Research some neckties",
+         "3": "Go to a necktie website",
+         "4": "Send the necktie to yourself",
+         "5": "buy a new necktie",
+         "6": "feel dissatisfied"
+       },
+       "edges": [
+         "2->3",
+         "3->1",
+         "1->0",
+         "1->6",
+         "6->1",
+         "0->4",
+         "4->5"
+       ],
+       "script_graph": {
+         "type": "sequence",
+         "script": [
+           "2",
+           "3",
+           {
+             "type": "loop",
+             "entry": "1",
+             "retry": [
+               "6",
+               "continue"
+             ],
+             "exit": "0"
+           },
+           "4",
+           "5"
+         ]
+       }
+     }
+   ]
+   ```
+   需注意在 `edges` 中添加 `"1->0","1->6"`
+2. `unordered_nodes`中存在表示循环的词（如 `repeat`)
+
+   ```json
+   [
+     {
+       "id": 80,
+       "scenario": "learn to play chess like a grand master",
+       "unordered_nodes": {
+         "0": "practice a game solo",
+         "1": "repeat until mastered",
+         "2": "setup up a chess board",
+         "3": "challenge others as practice",
+         "4": "read about the movements of the pieces",
+         "5": "learn to play chess like a grand master"
+       },
+       "edges": [
+         "2->0",
+         "4->0",
+         "0->3",
+         "3->1",
+         "1->5"
+       ],
+       "script_graph": {
+         "type": "sequence",
+         "script": [
+           {
+             "type": "and_join",
+             "branches_set": {
+               "b1": [
+                 "2"
+               ],
+               "b2": [
+                 "4"
+               ]
+             }
+           },
+           "0",
+           "3",
+           "1",
+           "5"
+         ]
+       }
+     },
+     {
+       "id": 80,
+       "scenario": "learn to play chess like a grand master",
+       "unordered_nodes": {
+         "0": "practice a game solo",
+         "1": "setup up a chess board",
+         "2": "practice with others",
+         "3": "read about the movements of the pieces",
+         "4": "learn to play chess like a grand master",
+         "5": "participate in a chess tournament to test level",
+         "6": "rated as master level"
+       },
+       "edges": [
+         "3->1",
+         "1->5",
+         "5->6",
+         "5->0",
+         "5->2",
+         "0->5",
+         "2->5",
+         "6->4"
+       ],
+       "script_graph": {
+         "type": "sequence",
+         "script": [
+           "3",
+           "1",
+           {
+             "type": "loop",
+             "entry": "5",
+             "retry": [
+               {
+                 "type": "select",
+                 "options": [
+                   "0",
+                   "2"
+                 ]
+               }
+             ],
+             "exit": "6"
+           },
+           "4"
+         ]
+       }
+     }
+   ]
+   ```
+   删除包含 `repeat` 的节点，并通过增添新节点"5","6"，修改原节点"2"，在引入循环结构的同时使得事件图逻辑更合理，除此之外还在循环体 `retry` 中额外附加了选择结构。需注意修改 `edges` 和 `script_graph` 使其正确描述当前事件链
+3. 在 `sequence` 中添加 `select`
+
+   ```json
+   [
+     {
+       "id": 15,
+       "scenario": "deposit funds at the bank",
+       "unordered_nodes": {
+         "0": "walk to car",
+         "1": "walk to a teller",
+         "2": "fill out a deposit slip",
+         "3": "get in the car",
+         "4": "drive to the bank",
+         "5": "leave the office building",
+         "6": "walk in the bank",
+         "7": "deposit funds at the bank"
+       },
+       "edges": [
+         "0->3",
+         "1->7",
+         "2->1",
+         "3->4",
+         "4->6",
+         "5->0",
+         "6->2"
+       ],
+       "script_graph": {
+         "type": "sequence",
+         "script": [
+           "5",
+           "0",
+           "3",
+           "4",
+           "6",
+           "2",
+           "1",
+           "7"
+         ]
+       }
+     },
+     {
+       "id": 15,
+       "scenario": "deposit funds at the bank",
+       "unordered_nodes": {
+         "0": "walk to car",
+         "1": "walk to a teller",
+         "2": "fill out a deposit slip",
+         "3": "get in the car",
+         "4": "drive to the bank",
+         "5": "leave the office building",
+         "6": "walk in the bank",
+         "7": "deposit funds at the bank",
+         "8": "go straight to the ATM",
+         "9": "insert card",
+         "10": "select deposit and insert cash",
+         "11": "obtain a receipt after the machine counts"
+       },
+       "edges": [
+         "0->3",
+         "1->7",
+         "2->1",
+         "3->4",
+         "4->6",
+         "5->0",
+         "6->2",
+         "6->8",
+         "8->9",
+         "9->10",
+         "10->11",
+         "11->7"
+       ],
+       "script_graph": {
+         "type": "sequence",
+         "script": [
+           "5",
+           "0",
+           "3",
+           "4",
+           "6",
+           {
+             "type": "select",
+             "options": [
+               {
+                 "type": "sequence",
+                 "script": [
+                   "2",
+                   "1"
+                 ]
+               },
+               {
+                 "type": "sequence",
+                 "script": [
+                   "8",
+                   "9",
+                   "10",
+                   "11"
+                 ]
+               }
+             ]
+           },
+           "7"
+         ]
+       }
+     }
+   ]
+   ```

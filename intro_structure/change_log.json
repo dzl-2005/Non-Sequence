@@ -2,56 +2,101 @@
   {
     "id": 11,
     "type": "spelling_fix",
-    "details": "corrected 'th' to 'the' in node 4: 'Put the pack inside th car' -> 'Put the pack inside the car'"
+    "details": "corrected 'th' to 'the' in node 4, and 'water bottle' to 'water bottles' in node 2"
   },
   {
     "id": 12,
     "type": "spelling_fix",
-    "details": "corrected 'an' to 'and' in node 4: 'Mix sand an water' -> 'Mix sand and water'"
+    "details": "corrected 'an water' to 'and water' in node 4"
+  },
+  {
+    "id": 13,
+    "type": "structure_changed",
+    "details": "changed and_join to select for research methods"
   },
   {
     "id": 14,
-    "type": "structure_added",
-    "details": "added select structure for option to read instructions before buying parts"
+    "type": "structure_changed",
+    "details": "added select for reading instructions option, added node 8 and edges"
+  },
+  {
+    "id": 15,
+    "type": "structure_changed",
+    "details": "added ATM branch select, added nodes 8-11"
   },
   {
     "id": 19,
     "type": "spelling_fix",
-    "details": "fixed 'chose' to 'choose' in node 3"
+    "details": "corrected 'chose' to 'choose' in node 3"
   },
   {
-    "id": 23,
-    "type": "structure_added",
-    "details": "Removed edge '2->0' because it created a shortcut bypassing the input step, inconsistent with the intended linear flow."
+    "id": 25,
+    "type": "structure_changed",
+    "details": "introduced loop for necktie selection dissatisfaction, added node 6"
+  },
+  {
+    "id": 30,
+    "type": "structure_changed",
+    "details": "added select structure for delivery vs in-store pickup"
   },
   {
     "id": 31,
     "type": "spelling_fix",
-    "details": "corrected 'kindergarden' to 'kindergarten' in scenario and node5"
+    "details": "corrected 'kindergarden' to 'kindergarten' in scenario"
   },
   {
     "id": 41,
-    "type": "structure_added",
-    "details": "added select structure to allow optionally turning on Netflix before starting movie, reflecting edges 0->2 and 0->4"
+    "type": "structure_changed",
+    "details": "removed redundant edge 0->2 to fix linear flow"
+  },
+  {
+    "id": 54,
+    "type": "structure_changed",
+    "details": "Introduced loop for time machine testing: added node 'time machine fails', modified edges (4->0 instead of 4->5, added 0->7, 7->5, 5->0), and restructured script_graph to include loop with entry '0', retry ['7','5','continue'], and exit '6'."
+  },
+  {
+    "id": 55,
+    "type": "spelling_fix",
+    "details": "Removed trailing comma from node 6: changed 'try out for the roller hockey team,' to 'try out for the roller hockey team'."
+  },
+  {
+    "id": 57,
+    "type": "structure_changed",
+    "details": "Added loop structure for weekly dance classes; added nodes 6 (take a dance exam), 7 (pass the exam), 8 (attend additional classes); renamed node 1 from 'go to the class every week' to 'attend the first class'; edges updated accordingly."
+  },
+  {
+    "id": 60,
+    "type": "structure_changed",
+    "details": "Replaced and_join with select structure to reflect mutually exclusive use of computer or phone; edges unchanged."
   },
   {
     "id": 67,
     "type": "spelling_fix",
-    "details": "corrected 'balooning' to 'ballooning' in node 0"
+    "details": "corrected 'balooning' to 'ballooning' in scenario and node 0"
+  },
+  {
+    "id": 74,
+    "type": "structure_changed",
+    "details": "Introduced loop for trying on shoes: added nodes 7,8,9; modified edges and script_graph to include a loop where the customer tries on shoes and can look for another pair if not satisfied."
   },
   {
     "id": 80,
     "type": "spelling_fix",
-    "details": "corrected 'setup up a chess board' to 'set up a chess board'"
+    "details": "corrected 'setup up a chess board' to 'set up a chess board' in node 2"
   },
   {
     "id": 80,
-    "type": "structure_added",
-    "details": "introduced loop structure to represent the 'repeat until mastered' pattern; updated edges and script_graph accordingly"
+    "type": "structure_changed",
+    "details": "removed node 'repeat until mastered', added nodes 'participate in a chess tournament to test level' and 'rated as master level', restructured script_graph from and_join to loop with nested select for practice options"
+  },
+  {
+    "id": 89,
+    "type": "structure_changed",
+    "details": "introduced loop for searching music repeatedly by adding node '6' (add found songs to playlist) and restructuring edges and script_graph"
   },
   {
     "id": 92,
-    "type": "structure_added",
-    "details": "Restructured flat sequence to include a loop for repeating the activity. Modified node 1 from 'Repeat the activity whenver the time is right' to 'Decide whether to repeat the activity whenever time is right' (spelling corrected and meaning clarified for decision). Added loop structure with entry=1, retry=[2,0,3,continue], exit=6. Removed old edges and added new edges to support loop."
+    "type": "deletion",
+    "details": "removed due to implicit loop in edges (node 'Repeat the activity') and inability to restructure without duplication"
   }
 ]

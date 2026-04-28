@@ -367,7 +367,7 @@
     "unordered_nodes": {
       "0": "Make payment for the purchase",
       "1": "Drive to the camp",
-      "2": "Walk inside, buy a pack of water bottle",
+      "2": "Walk inside, buy a pack of water bottles",
       "3": "Drive to nearest store",
       "4": "Put the pack inside the car",
       "5": "bring a water bottle to camp"
@@ -445,15 +445,11 @@
       "script": [
         "2",
         {
-          "type": "and_join",
-          "branches_set": {
-            "b1": [
-              "0"
-            ],
-            "b2": [
-              "4"
-            ]
-          }
+          "type": "select",
+          "options": [
+            "0",
+            "4"
+          ]
         },
         "3",
         "1",
@@ -472,12 +468,14 @@
       "4": "Use the computer happily",
       "5": "Put each part in piece by piece",
       "6": "Check that everything is in the right place",
-      "7": "build a computer since buying one was expensive"
+      "7": "build a computer since buying one was expensive",
+      "8": "skip reading and start buying parts"
     },
     "edges": [
-      "2->3",
       "2->0",
+      "2->8",
       "0->3",
+      "8->3",
       "3->5",
       "5->6",
       "6->1",
@@ -491,16 +489,11 @@
         {
           "type": "select",
           "options": [
-            {
-              "type": "sequence",
-              "script": [
-                "0",
-                "3"
-              ]
-            },
-            "3"
+            "0",
+            "8"
           ]
         },
+        "3",
         "5",
         "6",
         "1",
@@ -520,16 +513,25 @@
       "4": "drive to the bank",
       "5": "leave the office building",
       "6": "walk in the bank",
-      "7": "deposit funds at the bank"
+      "7": "deposit funds at the bank",
+      "8": "go straight to the ATM",
+      "9": "insert card",
+      "10": "select deposit and insert cash",
+      "11": "obtain a receipt after the machine counts"
     },
     "edges": [
+      "5->0",
       "0->3",
-      "1->7",
-      "2->1",
       "3->4",
       "4->6",
-      "5->0",
-      "6->2"
+      "6->2",
+      "6->8",
+      "2->1",
+      "1->7",
+      "8->9",
+      "9->10",
+      "10->11",
+      "11->7"
     ],
     "script_graph": {
       "type": "sequence",
@@ -539,8 +541,27 @@
         "3",
         "4",
         "6",
-        "2",
-        "1",
+        {
+          "type": "select",
+          "options": [
+            {
+              "type": "sequence",
+              "script": [
+                "2",
+                "1"
+              ]
+            },
+            {
+              "type": "sequence",
+              "script": [
+                "8",
+                "9",
+                "10",
+                "11"
+              ]
+            }
+          ]
+        },
         "7"
       ]
     }
@@ -803,6 +824,7 @@
       "0->5",
       "1->7",
       "2->4",
+      "2->0",
       "3->1",
       "4->0",
       "5->6",
@@ -861,22 +883,32 @@
       "2": "Research some neckties",
       "3": "Go to a necktie website",
       "4": "Send the necktie to yourself",
-      "5": "buy a new necktie"
+      "5": "buy a new necktie",
+      "6": "feel dissatisfied"
     },
     "edges": [
       "2->3",
       "3->1",
       "1->0",
       "0->4",
-      "4->5"
+      "4->5",
+      "1->6",
+      "6->1"
     ],
     "script_graph": {
       "type": "sequence",
       "script": [
         "2",
         "3",
-        "1",
-        "0",
+        {
+          "type": "loop",
+          "entry": "1",
+          "retry": [
+            "6",
+            "continue"
+          ],
+          "exit": "0"
+        },
         "4",
         "5"
       ]
@@ -1054,23 +1086,45 @@
       "2": "Pick up Xbox from counter",
       "3": "Drive to store",
       "4": "Save up money to buy the Xbox",
-      "5": "buy an xbox one"
+      "5": "buy an xbox one",
+      "6": "Wait for delivery",
+      "7": "Receive package at home"
     },
     "edges": [
       "0->3",
+      "0->6",
       "1->5",
       "2->1",
       "3->2",
-      "4->0"
+      "4->0",
+      "6->7",
+      "7->5"
     ],
     "script_graph": {
       "type": "sequence",
       "script": [
         "4",
         "0",
-        "3",
-        "2",
-        "1",
+        {
+          "type": "select",
+          "options": [
+            {
+              "type": "sequence",
+              "script": [
+                "3",
+                "2",
+                "1"
+              ]
+            },
+            {
+              "type": "sequence",
+              "script": [
+                "6",
+                "7"
+              ]
+            }
+          ]
+        },
         "5"
       ]
     }
@@ -1415,7 +1469,6 @@
       "5": "watch some movies with friends"
     },
     "edges": [
-      "0->2",
       "2->5",
       "3->1",
       "1->0",
@@ -1428,19 +1481,8 @@
         "3",
         "1",
         "0",
-        {
-          "type": "select",
-          "options": [
-            "2",
-            {
-              "type": "sequence",
-              "script": [
-                "4",
-                "2"
-              ]
-            }
-          ]
-        },
+        "4",
+        "2",
         "5"
       ]
     }
@@ -1780,6 +1822,7 @@
     }
   },
   {
+    "id": 51,
     "scenario": "go on an airplane",
     "unordered_nodes": {
       "0": "go inside the airport",
@@ -1806,8 +1849,7 @@
         "0",
         "5"
       ]
-    },
-    "id": 51
+    }
   },
   {
     "id": 52,
@@ -1890,14 +1932,17 @@
       "2": "Turn on the computer",
       "3": "Think of time travel",
       "4": "Look at time travel machine designs",
-      "5": "Build Time traveling machine",
-      "6": "go to school yesterday"
+      "5": "Build time traveling machine",
+      "6": "go to school yesterday",
+      "7": "time machine fails"
     },
     "edges": [
       "3->2",
       "2->1",
       "1->4",
-      "4->5",
+      "4->0",
+      "0->7",
+      "7->5",
       "5->0",
       "0->6"
     ],
@@ -1908,9 +1953,16 @@
         "2",
         "1",
         "4",
-        "5",
-        "0",
-        "6"
+        {
+          "type": "loop",
+          "entry": "0",
+          "retry": [
+            "7",
+            "5",
+            "continue"
+          ],
+          "exit": "6"
+        }
       ]
     }
   },
@@ -1924,7 +1976,7 @@
       "3": "Decide desired team to play for",
       "4": "Sit down at computer",
       "5": "Travel to tryout on date specified",
-      "6": "try out for the roller hockey team,"
+      "6": "try out for the roller hockey team"
     },
     "edges": [
       "0->5",
@@ -1991,18 +2043,25 @@
     "scenario": "learn how to dance in college",
     "unordered_nodes": {
       "0": "read a flyer for a dance club",
-      "1": "go to the class every week",
+      "1": "attend the first class",
       "2": "go online to the web site",
       "3": "sign up for the class",
       "4": "wait until the first class",
-      "5": "learn how to dance in college"
+      "5": "learn how to dance in college",
+      "6": "take a dance exam",
+      "7": "pass the exam",
+      "8": "attend additional classes"
     },
     "edges": [
       "0->2",
-      "1->5",
       "2->3",
       "3->4",
-      "4->1"
+      "4->1",
+      "1->6",
+      "6->7",
+      "6->8",
+      "8->6",
+      "7->5"
     ],
     "script_graph": {
       "type": "sequence",
@@ -2012,6 +2071,15 @@
         "3",
         "4",
         "1",
+        {
+          "type": "loop",
+          "entry": "6",
+          "retry": [
+            "8",
+            "continue"
+          ],
+          "exit": "7"
+        },
         "5"
       ]
     }
@@ -2098,16 +2166,22 @@
       "type": "sequence",
       "script": [
         {
-          "type": "and_join",
-          "branches_set": {
-            "b1": [
-              "0"
-            ],
-            "b2": [
-              "1",
-              "4"
-            ]
-          }
+          "type": "select",
+          "options": [
+            {
+              "type": "sequence",
+              "script": [
+                "0"
+              ]
+            },
+            {
+              "type": "sequence",
+              "script": [
+                "1",
+                "4"
+              ]
+            }
+          ]
         },
         "3",
         "2",
@@ -2567,15 +2641,22 @@
       "3": "walk into the shoe store",
       "4": "get out of the car",
       "5": "drive to the store",
-      "6": "buy a pair of running shoes"
+      "6": "buy a pair of running shoes",
+      "7": "try on the shoes",
+      "8": "shoes are comfortable",
+      "9": "look for another pair"
     },
     "edges": [
-      "0->3",
-      "1->2",
-      "2->6",
-      "3->1",
+      "5->4",
       "4->0",
-      "5->4"
+      "0->3",
+      "3->7",
+      "7->8",
+      "7->9",
+      "9->1",
+      "1->7",
+      "8->2",
+      "2->6"
     ],
     "script_graph": {
       "type": "sequence",
@@ -2584,7 +2665,16 @@
         "4",
         "0",
         "3",
-        "1",
+        {
+          "type": "loop",
+          "entry": "7",
+          "retry": [
+            "9",
+            "1",
+            "continue"
+          ],
+          "exit": "8"
+        },
         "2",
         "6"
       ]
@@ -2767,44 +2857,44 @@
     "scenario": "learn to play chess like a grand master",
     "unordered_nodes": {
       "0": "practice a game solo",
-      "1": "repeat until mastered",
       "2": "set up a chess board",
-      "3": "challenge others as practice",
+      "3": "practice with others",
       "4": "read about the movements of the pieces",
-      "5": "learn to play chess like a grand master"
+      "5": "learn to play chess like a grand master",
+      "6": "participate in a chess tournament to test level",
+      "7": "rated as master level"
     },
     "edges": [
-      "2->1",
-      "4->1",
-      "1->0",
-      "1->5",
-      "0->3",
-      "3->1"
+      "4->2",
+      "2->6",
+      "6->7",
+      "6->0",
+      "6->3",
+      "0->6",
+      "3->6",
+      "7->5"
     ],
     "script_graph": {
       "type": "sequence",
       "script": [
-        {
-          "type": "and_join",
-          "branches_set": {
-            "b1": [
-              "2"
-            ],
-            "b2": [
-              "4"
-            ]
-          }
-        },
+        "4",
+        "2",
         {
           "type": "loop",
-          "entry": "1",
+          "entry": "6",
           "retry": [
-            "0",
-            "3",
+            {
+              "type": "select",
+              "options": [
+                "0",
+                "3"
+              ]
+            },
             "continue"
           ],
-          "exit": "5"
-        }
+          "exit": "7"
+        },
+        "5"
       ]
     }
   },
@@ -3142,14 +3232,17 @@
       "2": "load up song player",
       "3": "search for a lot of music",
       "4": "load up windows",
-      "5": "make a new playlist of songs"
+      "5": "make a new playlist of songs",
+      "6": "add found songs to playlist"
     },
     "edges": [
       "0->1",
       "1->4",
       "2->3",
       "3->5",
-      "4->2"
+      "3->6",
+      "4->2",
+      "6->3"
     ],
     "script_graph": {
       "type": "sequence",
@@ -3158,8 +3251,15 @@
         "1",
         "4",
         "2",
-        "3",
-        "5"
+        {
+          "type": "loop",
+          "entry": "3",
+          "retry": [
+            "6",
+            "continue"
+          ],
+          "exit": "5"
+        }
       ]
     }
   },
@@ -3236,46 +3336,6 @@
         },
         "1",
         "5"
-      ]
-    }
-  },
-  {
-    "id": 92,
-    "scenario": "find a hobby",
-    "unordered_nodes": {
-      "0": "Gather the items necessary for the activity",
-      "1": "Decide whether to repeat the activity whenever time is right",
-      "2": "Think about the ways to complete the activity",
-      "3": "Complete the activity",
-      "4": "Pick the most appealing activity",
-      "5": "Look for the interesting activities",
-      "6": "find a hobby"
-    },
-    "edges": [
-      "5->4",
-      "4->1",
-      "1->2",
-      "1->6",
-      "2->0",
-      "0->3",
-      "3->1"
-    ],
-    "script_graph": {
-      "type": "sequence",
-      "script": [
-        "5",
-        "4",
-        {
-          "type": "loop",
-          "entry": "1",
-          "retry": [
-            "2",
-            "0",
-            "3",
-            "continue"
-          ],
-          "exit": "6"
-        }
       ]
     }
   },
