@@ -68,6 +68,7 @@ For example:
 }
 In this case, the core goal of the scenario is already accomplished once the control flow reaches node "1" (wait for answer). Appending the redundant node begin by calling first person on list afterward creates illogical and awkward flow.
 To fix this issue, we are allowed to either delete the duplicate scenario-matching node (node 6) or modify the meaning of it into a logically coherent closing node, such as successfully talked with the other party. All corresponding references in unordered_nodes and edges must be revised accordingly to maintain consistent logic.
+When you apply this correction (deleting the node or modifying its meaning), you must record the change in the change log under the type "structure_changed".
 
 Output Constraints (applies to the processed data file):
 - Keep the original JSON structure for each item: id, scenario, unordered_nodes, edges, script_graph.
