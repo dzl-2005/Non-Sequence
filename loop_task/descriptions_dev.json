@@ -1,0 +1,805 @@
+[
+  {
+    "id": 1,
+    "scenario": "Sign new lease",
+    "steps": [
+      "Submit application to landlord",
+      "wait patiently for landlord to make a decision",
+      "landlord calls the tenant",
+      "answer cell phone",
+      "landlord reveals the good news to accept tenant",
+      "landlord meets with new tenants again",
+      "hand over deposit and first month rent check",
+      "Sign new lease"
+    ],
+    "loop_idx": 1,
+    "loop_step": "wait patiently for landlord to make a decision",
+    "descriptions": [
+      [
+        "tenant has not received any phone call or email from the landlord regarding the application decision",
+        1,
+        "easy"
+      ],
+      [
+        "the landlord's online application portal still shows the status as 'under review'",
+        1,
+        "medium"
+      ],
+      [
+        "the landlord has not requested any additional documents or references from the tenant since the application was submitted",
+        1,
+        "hard"
+      ],
+      [
+        "the tenant's phone display shows an incoming call from the landlord's number",
+        0,
+        "easy"
+      ],
+      [
+        "the tenant receives a text message from the landlord saying 'I have made my decision, please give me a call'",
+        0,
+        "medium"
+      ],
+      [
+        "the tenant sees a notification from the rental application portal indicating that the application status has changed to 'Approved'",
+        0,
+        "hard"
+      ],
+      [
+        "the landlord is wearing a blue suit",
+        2,
+        "na"
+      ],
+      [
+        "the apartment has a view of the park",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 2,
+    "scenario": "Walk to the car",
+    "steps": [
+      "Remember where the car is parked",
+      "Leave the apartment building",
+      "Lift right leg up off the ground",
+      "Extend right leg forward in the direction of the car",
+      "Lift left leg up off the ground",
+      "Extend left leg forward in the direction of the car",
+      "Continue lifting and extending legs until arrival at the car",
+      "Walk to the car"
+    ],
+    "loop_idx": 6,
+    "loop_step": "Continue lifting and extending legs until arrival at the car",
+    "descriptions": [
+      [
+        "The car is still visible at a distance and not directly in front of me.",
+        1,
+        "easy"
+      ],
+      [
+        "I have not yet reached the point where I can touch the car's door handle.",
+        1,
+        "medium"
+      ],
+      [
+        "The GPS coordinates of my position still differ from the car's parking location.",
+        1,
+        "hard"
+      ],
+      [
+        "The car's door handle is within your grasp.",
+        0,
+        "easy"
+      ],
+      [
+        "The car's ultrasonic parking sensor indicates an obstacle at 0.2 meters.",
+        0,
+        "medium"
+      ],
+      [
+        "The car's telematics system logs that the smartphone GPS coordinate matches the parked location.",
+        0,
+        "hard"
+      ],
+      [
+        "The sun is setting, casting long shadows on the ground.",
+        2,
+        "na"
+      ],
+      [
+        "A gentle breeze is blowing from the east, rustling the leaves.",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 3,
+    "scenario": "Receive package in mail",
+    "steps": [
+      "Wait for delivery",
+      "Check delivery status",
+      "Wait until status says delivered",
+      "Go to front door",
+      "Open front door",
+      "Pick up package",
+      "Receive package in mail"
+    ],
+    "loop_idx": 2,
+    "loop_step": "Wait until status says delivered",
+    "descriptions": [
+      [
+        "The tracking page still shows the status as 'Out for delivery'.",
+        1,
+        "easy"
+      ],
+      [
+        "The estimated delivery time window has passed but no delivery confirmation has appeared.",
+        1,
+        "medium"
+      ],
+      [
+        "The automated delivery confirmation email has not been sent to your inbox.",
+        1,
+        "hard"
+      ],
+      [
+        "the tracking page displays 'delivered' status",
+        0,
+        "easy"
+      ],
+      [
+        "a delivery confirmation notification appears on your phone",
+        0,
+        "medium"
+      ],
+      [
+        "the carrier's GPS shows the delivery vehicle has been at your address and left, matching the delivery window",
+        0,
+        "hard"
+      ],
+      [
+        "the living room carpet is beige",
+        2,
+        "na"
+      ],
+      [
+        "you are wearing slippers today",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 4,
+    "scenario": "receive the large animal",
+    "steps": [
+      "set up the paperwork",
+      "wait for the paperwork to be approved",
+      "received certified mail with notarized licenses",
+      "order food for the new animal",
+      "order medicine and toys",
+      "wait for transport to arrive",
+      "receive the large animal"
+    ],
+    "loop_idx": 5,
+    "loop_step": "wait for transport to arrive",
+    "descriptions": [
+      [
+        "the transport vehicle is not visible at the designated arrival area",
+        1,
+        "easy"
+      ],
+      [
+        "the online tracking system shows the transport status as 'in transit' and not yet 'delivered'",
+        1,
+        "medium"
+      ],
+      [
+        "the pre-arranged electronic notification for arrival has not been triggered and the driver has not reported reaching the destination",
+        1,
+        "hard"
+      ],
+      [
+        "the transport vehicle is parked at the receiving dock",
+        0,
+        "easy"
+      ],
+      [
+        "a notification from the transport company confirms delivery completion",
+        0,
+        "medium"
+      ],
+      [
+        "the GPS tracking system shows the transport unit has been stationary at the facility location for over five minutes, indicating arrival",
+        0,
+        "hard"
+      ],
+      [
+        "the large animal's shipping crate has a small ventilation window on the top",
+        2,
+        "na"
+      ],
+      [
+        "the certified mail envelope is sealed with a bright red wax emblem",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 5,
+    "scenario": "open the refrigerator",
+    "steps": [
+      "walk to the refrigerator",
+      "Stop in front of the refrigerator",
+      "Reach hand toward the refrigerator door",
+      "Grip the refrigerator door tightly",
+      "Begin pulling on the refrigerator door",
+      "Continue pulling until the door is opened",
+      "open the refrigerator"
+    ],
+    "loop_idx": 5,
+    "loop_step": "Continue pulling until the door is opened",
+    "descriptions": [
+      [
+        "The refrigerator door is still touching the fridge body along the top edge.",
+        1,
+        "easy"
+      ],
+      [
+        "The door has been pulled outward only a few inches, leaving most of the rubber gasket still in contact.",
+        1,
+        "medium"
+      ],
+      [
+        "The door's hinges have not yet reached their full extension, so the door is not at its maximum open position.",
+        1,
+        "hard"
+      ],
+      [
+        "The refrigerator door is fully open.",
+        0,
+        "easy"
+      ],
+      [
+        "The door's magnetic seal has separated from the refrigerator body.",
+        0,
+        "medium"
+      ],
+      [
+        "The pulling force on the door has decreased to zero as the door has reached its fully open position.",
+        0,
+        "hard"
+      ],
+      [
+        "the refrigerator light flickers slightly",
+        2,
+        "na"
+      ],
+      [
+        "there is a magnet shaped like a cow on the door",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 6,
+    "scenario": "Purchase zoo ticket",
+    "steps": [
+      "Start car and drive to zoo",
+      "find parking lot",
+      "drive around looking for space",
+      "find empty space",
+      "park car in empty space",
+      "get out of car",
+      "walk to ticket counter",
+      "Purchase zoo ticket"
+    ],
+    "loop_idx": 2,
+    "loop_step": "drive around looking for space",
+    "descriptions": [
+      [
+        "No empty parking spaces are visible in the current row.",
+        1,
+        "easy"
+      ],
+      [
+        "The parking lot's full sign is still illuminated at the entrance.",
+        1,
+        "medium"
+      ],
+      [
+        "The parking lot's occupancy counter shows that all 500 spaces are taken, and no vehicles have left in the last five minutes.",
+        1,
+        "hard"
+      ],
+      [
+        "an empty parking space is visible ahead",
+        0,
+        "easy"
+      ],
+      [
+        "the parking lot's electronic sign shows 'spaces available'",
+        0,
+        "medium"
+      ],
+      [
+        "a car pulls out of a parking spot, leaving it empty",
+        0,
+        "hard"
+      ],
+      [
+        "The zoo's main gate has a colorful banner advertising a new reptile house.",
+        2,
+        "na"
+      ],
+      [
+        "Your car's radio is tuned to a classic rock station.",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 7,
+    "scenario": "boil water for noodles",
+    "steps": [
+      "turn on the stove",
+      "place pot with water on stove",
+      "place a lid on the pot",
+      "allow the water to get hot",
+      "wait for the water to boil",
+      "add salt to the water and stir",
+      "boil water for noodles"
+    ],
+    "loop_idx": 4,
+    "loop_step": "wait for the water to boil",
+    "descriptions": [
+      [
+        "The water in the pot is not yet at a rolling boil, only occasional small bubbles rise to the surface.",
+        1,
+        "easy"
+      ],
+      [
+        "The steam rising from under the lid is thin and wispy, not a steady strong flow.",
+        1,
+        "medium"
+      ],
+      [
+        "The lid is still cool to the touch on top, indicating insufficient steam production.",
+        1,
+        "hard"
+      ],
+      [
+        "The water surface is covered with rapidly rising large bubbles that burst at the surface.",
+        0,
+        "easy"
+      ],
+      [
+        "The water temperature has reached 100 degrees Celsius as measured by a thermometer.",
+        0,
+        "medium"
+      ],
+      [
+        "The rate of steam emission from under the lid has become constant and the sound of boiling is a steady, unchanging rumble.",
+        0,
+        "hard"
+      ],
+      [
+        "the kitchen window is slightly open",
+        2,
+        "na"
+      ],
+      [
+        "a small potholder rests near the stove",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 8,
+    "scenario": "Browse through the jackets",
+    "steps": [
+      "Go to the store",
+      "pull into the store parking lot",
+      "look for available parking spot",
+      "pull into available parking spot",
+      "park the car",
+      "get out of the car",
+      "walk into the store",
+      "Browse through the jackets"
+    ],
+    "loop_idx": 2,
+    "loop_step": "look for available parking spot",
+    "descriptions": [
+      [
+        "No empty parking spots are visible in the parking lot.",
+        1,
+        "easy"
+      ],
+      [
+        "The parking lot is completely full with cars in every space.",
+        1,
+        "medium"
+      ],
+      [
+        "The parking lot's LED sign displays a red 'Full' message.",
+        1,
+        "hard"
+      ],
+      [
+        "there is an empty parking spot directly in front of the car",
+        0,
+        "easy"
+      ],
+      [
+        "the parking lot's digital display shows a count of available spots greater than zero",
+        0,
+        "medium"
+      ],
+      [
+        "a distant driver in the lot waves and points to a vacated spot they are about to leave",
+        0,
+        "hard"
+      ],
+      [
+        "the store's air conditioning is set to a cool temperature",
+        2,
+        "na"
+      ],
+      [
+        "the floor tiles are a light beige color",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 9,
+    "scenario": "enter the arena",
+    "steps": [
+      "take out tickets",
+      "walk to the entrance",
+      "wait in line to enter",
+      "give employee tickets",
+      "wait for employee to verify tickets",
+      "gain entrance to arena",
+      "enter the arena"
+    ],
+    "loop_idx": 4,
+    "loop_step": "wait for employee to verify tickets",
+    "descriptions": [
+      [
+        "the employee has not yet taken the tickets from your hand",
+        1,
+        "easy"
+      ],
+      [
+        "the employee is still scanning the barcode on each ticket",
+        1,
+        "medium"
+      ],
+      [
+        "the silent alarm on the ticket validator has not sounded when confirming authenticity",
+        1,
+        "hard"
+      ],
+      [
+        "The employee hands your tickets back to you.",
+        0,
+        "easy"
+      ],
+      [
+        "The ticket scanner shows a green light after scanning your tickets.",
+        0,
+        "medium"
+      ],
+      [
+        "The employee's tablet screen indicates your tickets have been successfully validated against the database.",
+        0,
+        "hard"
+      ],
+      [
+        "The arena's exterior is painted with a large mural of a gladiator.",
+        2,
+        "na"
+      ],
+      [
+        "The air smells of popcorn and hot dogs from nearby concession stands.",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 10,
+    "scenario": "read salsa making articles",
+    "steps": [
+      "look up how to make salsa",
+      "read through search results",
+      "determine which link to click",
+      "click the link",
+      "wait for webpage to open",
+      "scroll down webpage",
+      "read salsa making articles"
+    ],
+    "loop_idx": 4,
+    "loop_step": "wait for webpage to open",
+    "descriptions": [
+      [
+        "the loading spinner or progress bar is still visible on the page",
+        1,
+        "easy"
+      ],
+      [
+        "the main content area is blank or shows only a partial layout without text or images",
+        1,
+        "medium"
+      ],
+      [
+        "the browser's status bar still displays 'Waiting for...' or there are still pending network requests in the developer tools",
+        1,
+        "hard"
+      ],
+      [
+        "the salsa making article text is fully visible and the page is scrollable",
+        0,
+        "easy"
+      ],
+      [
+        "the browser's tab icon has stopped spinning and the page's loading indicator bar is no longer visible",
+        0,
+        "medium"
+      ],
+      [
+        "the browser's performance API reports that the load event has been completed for the current document",
+        0,
+        "hard"
+      ],
+      [
+        "the window is open letting in a gentle breeze",
+        2,
+        "na"
+      ],
+      [
+        "your phone is charging on the desk nearby",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 11,
+    "scenario": "launch a music playing app",
+    "steps": [
+      "open up the laptop",
+      "press the power button",
+      "wait for computer to turn on",
+      "type password for the laptop",
+      "press enter to log in to the laptop",
+      "move cursor towards music app icon",
+      "launch a music playing app"
+    ],
+    "loop_idx": 2,
+    "loop_step": "wait for computer to turn on",
+    "descriptions": [
+      [
+        "The screen remains black and no login prompt appears.",
+        1,
+        "easy"
+      ],
+      [
+        "The operating system loading animation is still displaying on the screen.",
+        1,
+        "medium"
+      ],
+      [
+        "The power LED continues to blink in a pattern that indicates the system is still in the boot process rather than idle.",
+        1,
+        "hard"
+      ],
+      [
+        "the login screen is visible on the laptop monitor",
+        0,
+        "easy"
+      ],
+      [
+        "the laptop's power indicator light transitions from blinking to solid",
+        0,
+        "medium"
+      ],
+      [
+        "the operating system's boot log displays the message 'Reached target Graphical Interface'",
+        0,
+        "hard"
+      ],
+      [
+        "the laptop is a silver model from last year",
+        2,
+        "na"
+      ],
+      [
+        "there is a faint hum from the air conditioner",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "steps": [
+      "go inside the shop",
+      "talk to receptionist",
+      "ask about waiting time",
+      "take seat and wait for barber",
+      "get called up to barber chair",
+      "take seat in front of mirror",
+      "tell the barber what haircut to receive"
+    ],
+    "loop_idx": 3,
+    "loop_step": "take seat and wait for barber",
+    "descriptions": [
+      [
+        "The barber has not called my name or gestured for me to come to the chair.",
+        1,
+        "easy"
+      ],
+      [
+        "I can see the barber still working on another customer and has not yet glanced toward the waiting area.",
+        1,
+        "medium"
+      ],
+      [
+        "The queue board still shows my name as 'waiting' and the barber's station indicator light remains red for 'occupied'.",
+        1,
+        "hard"
+      ],
+      [
+        "The barber calls my name out loud.",
+        0,
+        "easy"
+      ],
+      [
+        "The receptionist tells me the barber is ready to see me.",
+        0,
+        "medium"
+      ],
+      [
+        "The barber finishes the previous customer's haircut and makes direct eye contact with me while motioning toward the chair.",
+        0,
+        "hard"
+      ],
+      [
+        "the floor is tiled with black and white squares",
+        2,
+        "na"
+      ],
+      [
+        "there is a faint smell of hair products in the air",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 13,
+    "scenario": "Let the attendees into the party",
+    "steps": [
+      "Order hundreds of drinks to venue",
+      "Wait for the attendees to arrive",
+      "Walk over to the door of the venue",
+      "Listen for a knock at the door",
+      "Open the door to let the attendees in",
+      "Let the attendees into the party",
+      "Repeat until all the attendees have arrived"
+    ],
+    "loop_idx": 6,
+    "loop_step": "Repeat until all the attendees have arrived",
+    "descriptions": [
+      [
+        "There are still empty seats at the reserved tables for the attendees.",
+        1,
+        "easy"
+      ],
+      [
+        "The host's clipboard still has a list of unchecked names from the guest list.",
+        1,
+        "medium"
+      ],
+      [
+        "The doorman's tally counter shows fewer entries than the total expected guests.",
+        1,
+        "hard"
+      ],
+      [
+        "All attendees are now inside the party venue.",
+        0,
+        "easy"
+      ],
+      [
+        "The attendee checklist shows every name marked as arrived.",
+        0,
+        "medium"
+      ],
+      [
+        "The total count of people who have entered matches the number on the final RSVP list.",
+        0,
+        "hard"
+      ],
+      [
+        "the door handle is made of brass",
+        2,
+        "na"
+      ],
+      [
+        "you notice a faint smell of perfume in the air",
+        2,
+        "na"
+      ]
+    ]
+  },
+  {
+    "id": 14,
+    "scenario": "park the car",
+    "steps": [
+      "drive to the zoo",
+      "pull into zoo's parking lot",
+      "look for available parking spot",
+      "notice available parking spot",
+      "drive to available parking spot",
+      "pull into available parking spot",
+      "stop the car",
+      "park the car"
+    ],
+    "loop_idx": 2,
+    "loop_step": "look for available parking spot",
+    "descriptions": [
+      [
+        "the parking lot's entrance sign shows no empty spaces visible from the current position",
+        1,
+        "easy"
+      ],
+      [
+        "the parking lot's full sign is illuminated and no cars have left in the past two minutes",
+        1,
+        "medium"
+      ],
+      [
+        "the digital counter at the lot entrance still reads '0 available spaces' and has not changed since arrival",
+        1,
+        "hard"
+      ],
+      [
+        "There is an empty parking spot directly in front of the car.",
+        0,
+        "easy"
+      ],
+      [
+        "The parking lot's vacancy sign shows that there are available spots in the current row.",
+        0,
+        "medium"
+      ],
+      [
+        "The car's parking sensor detects an unoccupied space within the sensor range.",
+        0,
+        "hard"
+      ],
+      [
+        "a group of children is laughing near the entrance",
+        2,
+        "na"
+      ],
+      [
+        "the sun is beginning to set, casting long shadows across the parking lot",
+        2,
+        "na"
+      ]
+    ]
+  }
+]

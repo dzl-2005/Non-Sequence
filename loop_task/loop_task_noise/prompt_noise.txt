@@ -1,0 +1,118 @@
+Your task is to augment the existing data by adding reasonable noise to each state description (the first field in `descriptions`).
+
+## Data Template
+{
+  "id": number,
+  "sceniro": "scenario description",
+  "steps": ["step 1", "step 2", ...],
+  "loop_idx": index of the loop step (note: indexing may start from 0),
+  "loop_step": "content of the loop step",
+  "descriptions": [
+    ["state description text", answer (0/1/2), difficulty ("easy"/"medium"/"hard"/"na")],
+    ...
+  ]
+}
+
+## Field Explanation
+- Answer: 0 = exit loop, 1 = continue loop, 2 = irrelevant to loop decision
+- Difficulty: easy, medium, hard, na (na is used only when answer = 2)
+
+## Core Requirement
+Rewrite each state description by embedding noise into it. The new description MUST:
+1. Lead to exactly the same loop decision (0/1/2) as the original.
+2. Keep the original difficulty level.
+3. Preserve the original core signal intact — the noise must not make the signal stronger, weaker, or more precise.
+
+## What is NOISE
+Noise is information that:
+- Is naturally present in this specific situation given the scenario and current action.
+- Is perceptually or experientially connected to what the person is doing, but has **no logical or causal bearing** on the loop's termination condition.
+- Makes the text feel like a natural observation a person might have in that moment — not a random fact, and not a clue about the loop.
+
+**Good noise sources (choose based on the specific scenario):**
+- Sensory details about the environment: temperature, lighting, ambient sounds, smells, textures that are specific to this scene (e.g., "the kitchen window is fogged up").
+- The person's physical state or posture while performing the action (e.g., "leaning against the counter").
+- Properties of objects involved in the scene that are irrelevant to the loop (e.g., "the pot has a stainless steel handle").
+- Concurrent background events that naturally occur in this setting but do not relate to the loop's goal (e.g., "the radio is playing a jazz tune").
+- Other reasonable.
+
+**Forbidden noise sources:**
+- Generic filler: "a bird chirps", "a car honks", "the sun is shining" — these fit any scenario and feel artificial.
+- Completely unrelated mental tangents: "I remember I need to buy milk" when waiting for a landlord's decision.
+
+## CRITICAL: What is NOT allowed as noise
+The following are strictly forbidden because they modify the reasoning signal:
+
+1. **Additional evidence that supports the same conclusion**
+   - FORBIDDEN: "the water is not boiling yet, and the thermometer shows 80°C"
+
+2. **Explanations or clarifications of the original state**
+   - FORBIDDEN: "the battery is at 85%, meaning it is not yet fully charged"
+
+3. **Additional observations that confirm the same underlying condition**
+   - FORBIDDEN: "no empty parking spaces visible, and the lot entrance sign shows 'Full'"
+
+4. **Quantitative specifications that make a vague description more precise**
+   - FORBIDDEN: "the car is still far away, about 200 meters"
+
+5. **Dynamic events that replace a static state with a stronger signal**
+   - FORBIDDEN: Original: "the sign shows available spots greater than zero" → Rewritten: "the sign's number flips from zero to three". This changes a static state into a just-occurred event, providing stronger evidence that a spot is now available.
+
+6. **Sensory details that directly imply the loop condition**
+   - FORBIDDEN: Original: "the door is not fully open" → Rewritten: "I feel resistance as I pull, the door hasn't opened yet". Feeling resistance is a tactile signal that directly implies the door is not open — it adds a new evidence channel.
+
+7. **Any phrase using logical connectors to the loop**: "indicating", "confirming", "so", "therefore", "because" followed by loop-relevant content.
+
+**The Deletion Test**: After adding noise, mentally delete the noise part. The remaining core signal should be exactly as strong and clear as the original description. If removing the noise makes the description noticeably weaker, the noise was providing evidence.
+
+## Structure Requirements
+- Embed noise naturally into the sentence. Vary the structure across descriptions.
+- Acceptable techniques:
+  - Front-load contextual detail: "The kitchen is warm from the stove, and the water still shows only small bubbles."
+  - Mid-sentence embedding: "The parking lot, its asphalt shimmering, still shows no empty spaces."
+  - Natural compound observation: "Leaning against the counter, you see the tracking page still says 'Out for Delivery'."
+- The noise must not overshadow the core signal. The core facts that determine loop state must remain intact and clearly identifiable.
+
+## Examples of CORRECT noise embedding
+
+Scenario: "boil water for noodles", Loop: "wait for the water to boil"
+Original: ["The water is not yet boiling, only small bubbles", 1, "easy"]
+Correct: ["The kitchen is humid from the stove running, and the water still shows only occasional small bubbles", 1, "easy"]
+Correct: ["Standing by the stove with a wooden spoon in hand, you see that the water hasn't reached a boil yet", 1, "easy"]
+
+Original: ["The water is at a rolling boil", 0, "easy"]
+Correct: ["A cloud of steam fogs up the kitchen window as the water churns in a full rolling boil", 0, "easy"]
+
+Scenario: "Purchase zoo ticket", Loop: "drive around looking for space"
+Original: ["No empty parking spaces are visible", 1, "easy"]
+Correct: ["Squinting against the glare on the windshield, you scan row after row without spotting an empty space", 1, "easy"]
+Correct: ["The engine idles quietly as you look left and right, but every single spot is taken", 1, "easy"]
+
+Scenario: "launch a music playing app", Loop: "wait for computer to turn on"
+Original: ["The screen remains black", 1, "easy"]
+Correct: ["Your fingers rest on the keyboard, waiting, but the screen stays completely black", 1, "easy"]
+
+## Examples of INCORRECT noise (these are FORBIDDEN)
+
+Scenario: "boil water for noodles", Loop: "wait for the water to boil"
+Original: ["The water is not yet boiling, only small bubbles", 1, "easy"]
+Incorrect: ["The water is not yet boiling, only small bubbles, and the stove has been on for only 3 minutes", 1, "easy"]
+→ Problem: "stove has been on for only 3 minutes" explains why it's not boiling — provides evidence.
+
+Original: ["The lid is still cool to the touch on top", 1, "hard"]
+Incorrect: ["I touch the lid carefully; it's still cool, barely warm", 1, "hard"]
+→ Problem: "I touch the lid carefully" adds the act of touching, which is a direct method of sensing temperature, slightly reinforcing the signal. The original is already about touch; adding the action makes it more vivid but also more direct. (Marginally acceptable if the action is purely contextual, but here it enhances the sensory evidence.)
+
+Scenario: "Browse through the jackets", Loop: "look for available parking spot"
+Original: ["the parking lot's digital display shows a count of available spots greater than zero", 0, "medium"]
+Incorrect: ["The sign's number flips from zero to three, showing spots are available", 0, "medium"]
+→ Problem: "flips from zero to three" changes a static count into a dynamic event, providing stronger evidence that a spot just became available.
+
+Original: ["a distant driver in the lot waves and points to a vacated spot", 0, "hard"]
+Incorrect: ["A driver ahead flashes their brake lights and gestures to the spot they are pulling out of", 0, "hard"]
+→ Problem: "flashes their brake lights" adds a visual signal confirming the car is about to move, reinforcing the vacated spot evidence.
+
+## Output Format
+Directly output the complete JSON text with the same structure as the input. Only modify the first field of each `descriptions` entry (the state description text); keep the answer and difficulty unchanged.
+
+Input data:

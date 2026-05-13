@@ -1,0 +1,1122 @@
+[
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 0,
+    "description": "tenant has not received any phone call or email from the landlord regarding the application decision",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 1,
+    "description": "the landlord's online application portal still shows the status as 'under review'",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 2,
+    "description": "the landlord has not requested any additional documents or references from the tenant since the application was submitted",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 3,
+    "description": "the tenant's phone display shows an incoming call from the landlord's number",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 4,
+    "description": "the tenant receives a text message from the landlord saying 'I have made my decision, please give me a call'",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 5,
+    "description": "the tenant sees a notification from the rental application portal indicating that the application status has changed to 'Approved'",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 6,
+    "description": "the landlord is wearing a blue suit",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 1,
+    "scenario": "Sign new lease",
+    "desc_idx": 7,
+    "description": "the apartment has a view of the park",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 0,
+    "description": "The car is still visible at a distance and not directly in front of me.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 1,
+    "description": "I have not yet reached the point where I can touch the car's door handle.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 2,
+    "description": "The GPS coordinates of my position still differ from the car's parking location.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 3,
+    "description": "The car's door handle is within your grasp.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 4,
+    "description": "The car's ultrasonic parking sensor indicates an obstacle at 0.2 meters.",
+    "true_answer": 0,
+    "predicted": 2,
+    "difficulty": "medium",
+    "correct": false
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 5,
+    "description": "The car's telematics system logs that the smartphone GPS coordinate matches the parked location.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 6,
+    "description": "The sun is setting, casting long shadows on the ground.",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 2,
+    "scenario": "Walk to the car",
+    "desc_idx": 7,
+    "description": "A gentle breeze is blowing from the east, rustling the leaves.",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 0,
+    "description": "The tracking page still shows the status as 'Out for delivery'.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 1,
+    "description": "The estimated delivery time window has passed but no delivery confirmation has appeared.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 2,
+    "description": "The automated delivery confirmation email has not been sent to your inbox.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 3,
+    "description": "the tracking page displays 'delivered' status",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 4,
+    "description": "a delivery confirmation notification appears on your phone",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 5,
+    "description": "the carrier's GPS shows the delivery vehicle has been at your address and left, matching the delivery window",
+    "true_answer": 0,
+    "predicted": 2,
+    "difficulty": "hard",
+    "correct": false
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 6,
+    "description": "the living room carpet is beige",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 3,
+    "scenario": "Receive package in mail",
+    "desc_idx": 7,
+    "description": "you are wearing slippers today",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 0,
+    "description": "the transport vehicle is not visible at the designated arrival area",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 1,
+    "description": "the online tracking system shows the transport status as 'in transit' and not yet 'delivered'",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 2,
+    "description": "the pre-arranged electronic notification for arrival has not been triggered and the driver has not reported reaching the destination",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 3,
+    "description": "the transport vehicle is parked at the receiving dock",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 4,
+    "description": "a notification from the transport company confirms delivery completion",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 5,
+    "description": "the GPS tracking system shows the transport unit has been stationary at the facility location for over five minutes, indicating arrival",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 6,
+    "description": "the large animal's shipping crate has a small ventilation window on the top",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 4,
+    "scenario": "receive the large animal",
+    "desc_idx": 7,
+    "description": "the certified mail envelope is sealed with a bright red wax emblem",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 0,
+    "description": "The refrigerator door is still touching the fridge body along the top edge.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 1,
+    "description": "The door has been pulled outward only a few inches, leaving most of the rubber gasket still in contact.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 2,
+    "description": "The door's hinges have not yet reached their full extension, so the door is not at its maximum open position.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 3,
+    "description": "The refrigerator door is fully open.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 4,
+    "description": "The door's magnetic seal has separated from the refrigerator body.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 5,
+    "description": "The pulling force on the door has decreased to zero as the door has reached its fully open position.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 6,
+    "description": "the refrigerator light flickers slightly",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 5,
+    "scenario": "open the refrigerator",
+    "desc_idx": 7,
+    "description": "there is a magnet shaped like a cow on the door",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 0,
+    "description": "No empty parking spaces are visible in the current row.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 1,
+    "description": "The parking lot's full sign is still illuminated at the entrance.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 2,
+    "description": "The parking lot's occupancy counter shows that all 500 spaces are taken, and no vehicles have left in the last five minutes.",
+    "true_answer": 1,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": false
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 3,
+    "description": "an empty parking space is visible ahead",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 4,
+    "description": "the parking lot's electronic sign shows 'spaces available'",
+    "true_answer": 0,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": false
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 5,
+    "description": "a car pulls out of a parking spot, leaving it empty",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 6,
+    "description": "The zoo's main gate has a colorful banner advertising a new reptile house.",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 6,
+    "scenario": "Purchase zoo ticket",
+    "desc_idx": 7,
+    "description": "Your car's radio is tuned to a classic rock station.",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 0,
+    "description": "The water in the pot is not yet at a rolling boil, only occasional small bubbles rise to the surface.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 1,
+    "description": "The steam rising from under the lid is thin and wispy, not a steady strong flow.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 2,
+    "description": "The lid is still cool to the touch on top, indicating insufficient steam production.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 3,
+    "description": "The water surface is covered with rapidly rising large bubbles that burst at the surface.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 4,
+    "description": "The water temperature has reached 100 degrees Celsius as measured by a thermometer.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 5,
+    "description": "The rate of steam emission from under the lid has become constant and the sound of boiling is a steady, unchanging rumble.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 6,
+    "description": "the kitchen window is slightly open",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 7,
+    "scenario": "boil water for noodles",
+    "desc_idx": 7,
+    "description": "a small potholder rests near the stove",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 0,
+    "description": "No empty parking spots are visible in the parking lot.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 1,
+    "description": "The parking lot is completely full with cars in every space.",
+    "true_answer": 1,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": false
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 2,
+    "description": "The parking lot's LED sign displays a red 'Full' message.",
+    "true_answer": 1,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": false
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 3,
+    "description": "there is an empty parking spot directly in front of the car",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 4,
+    "description": "the parking lot's digital display shows a count of available spots greater than zero",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 5,
+    "description": "a distant driver in the lot waves and points to a vacated spot they are about to leave",
+    "true_answer": 0,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": false
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 6,
+    "description": "the store's air conditioning is set to a cool temperature",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 8,
+    "scenario": "Browse through the jackets",
+    "desc_idx": 7,
+    "description": "the floor tiles are a light beige color",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 0,
+    "description": "the employee has not yet taken the tickets from your hand",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 1,
+    "description": "the employee is still scanning the barcode on each ticket",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 2,
+    "description": "the silent alarm on the ticket validator has not sounded when confirming authenticity",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 3,
+    "description": "The employee hands your tickets back to you.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 4,
+    "description": "The ticket scanner shows a green light after scanning your tickets.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 5,
+    "description": "The employee's tablet screen indicates your tickets have been successfully validated against the database.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 6,
+    "description": "The arena's exterior is painted with a large mural of a gladiator.",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 9,
+    "scenario": "enter the arena",
+    "desc_idx": 7,
+    "description": "The air smells of popcorn and hot dogs from nearby concession stands.",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 0,
+    "description": "the loading spinner or progress bar is still visible on the page",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 1,
+    "description": "the main content area is blank or shows only a partial layout without text or images",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 2,
+    "description": "the browser's status bar still displays 'Waiting for...' or there are still pending network requests in the developer tools",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 3,
+    "description": "the salsa making article text is fully visible and the page is scrollable",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 4,
+    "description": "the browser's tab icon has stopped spinning and the page's loading indicator bar is no longer visible",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 5,
+    "description": "the browser's performance API reports that the load event has been completed for the current document",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 6,
+    "description": "the window is open letting in a gentle breeze",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 10,
+    "scenario": "read salsa making articles",
+    "desc_idx": 7,
+    "description": "your phone is charging on the desk nearby",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 0,
+    "description": "The screen remains black and no login prompt appears.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 1,
+    "description": "The operating system loading animation is still displaying on the screen.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 2,
+    "description": "The power LED continues to blink in a pattern that indicates the system is still in the boot process rather than idle.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 3,
+    "description": "the login screen is visible on the laptop monitor",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 4,
+    "description": "the laptop's power indicator light transitions from blinking to solid",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 5,
+    "description": "the operating system's boot log displays the message 'Reached target Graphical Interface'",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 6,
+    "description": "the laptop is a silver model from last year",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 11,
+    "scenario": "launch a music playing app",
+    "desc_idx": 7,
+    "description": "there is a faint hum from the air conditioner",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 0,
+    "description": "The barber has not called my name or gestured for me to come to the chair.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 1,
+    "description": "I can see the barber still working on another customer and has not yet glanced toward the waiting area.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 2,
+    "description": "The queue board still shows my name as 'waiting' and the barber's station indicator light remains red for 'occupied'.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 3,
+    "description": "The barber calls my name out loud.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 4,
+    "description": "The receptionist tells me the barber is ready to see me.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 5,
+    "description": "The barber finishes the previous customer's haircut and makes direct eye contact with me while motioning toward the chair.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 6,
+    "description": "the floor is tiled with black and white squares",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 12,
+    "scenario": "tell the barber what haircut to receive",
+    "desc_idx": 7,
+    "description": "there is a faint smell of hair products in the air",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 0,
+    "description": "There are still empty seats at the reserved tables for the attendees.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 1,
+    "description": "The host's clipboard still has a list of unchecked names from the guest list.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 2,
+    "description": "The doorman's tally counter shows fewer entries than the total expected guests.",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 3,
+    "description": "All attendees are now inside the party venue.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 4,
+    "description": "The attendee checklist shows every name marked as arrived.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 5,
+    "description": "The total count of people who have entered matches the number on the final RSVP list.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 6,
+    "description": "the door handle is made of brass",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 13,
+    "scenario": "Let the attendees into the party",
+    "desc_idx": 7,
+    "description": "you notice a faint smell of perfume in the air",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 0,
+    "description": "the parking lot's entrance sign shows no empty spaces visible from the current position",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 1,
+    "description": "the parking lot's full sign is illuminated and no cars have left in the past two minutes",
+    "true_answer": 1,
+    "predicted": 1,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 2,
+    "description": "the digital counter at the lot entrance still reads '0 available spaces' and has not changed since arrival",
+    "true_answer": 1,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": false
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 3,
+    "description": "There is an empty parking spot directly in front of the car.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "easy",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 4,
+    "description": "The parking lot's vacancy sign shows that there are available spots in the current row.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "medium",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 5,
+    "description": "The car's parking sensor detects an unoccupied space within the sensor range.",
+    "true_answer": 0,
+    "predicted": 0,
+    "difficulty": "hard",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 6,
+    "description": "a group of children is laughing near the entrance",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  },
+  {
+    "item_id": 14,
+    "scenario": "park the car",
+    "desc_idx": 7,
+    "description": "the sun is beginning to set, casting long shadows across the parking lot",
+    "true_answer": 2,
+    "predicted": 2,
+    "difficulty": "na",
+    "correct": true
+  }
+]

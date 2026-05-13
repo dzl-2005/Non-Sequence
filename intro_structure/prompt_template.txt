@@ -304,7 +304,7 @@ Transformed (added node 6 and loop):
   }
 }
 
-Transformation 2: Handling nodes with implicit loop keywords (e.g., "repeat")
+Transformation 2: Handling nodes with implicit loop keywords (e.g."repeat","wait for","until" but not absolutely; self-judgment is needed)
 Original (flat):
 {
   "id": 80,
