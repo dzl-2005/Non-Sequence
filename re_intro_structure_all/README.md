@@ -1,8 +1,9 @@
 # 调用 deepseek-v4-pro 重新引入 select 和 loop 结构
 
-## 各结构比例（共 1078 条数据）
-完整数据: `processed_data.json`
-按比例抽样: 'tmp.json'
+完整数据: `processed_data.json`[1078]
+按比例抽样: `tmp.json`[105]
+
+## 各结构比例
 
 | 结构     | 条数 | 占比   |
 | -------- | ---- | ------ |
