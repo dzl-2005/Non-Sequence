@@ -7,3 +7,8 @@
 3. LLM 按要求返回两个 JSON 对象：`processed_data`（保留并修改后的所有条目）和 `change_log`（修改日志）；
 4. 分批次更新断点文件 `checkpoint.json`，支持断点续传；
 5. 最终保存 `processed_data.json` 和 `change_log.json`。
+
+## 统计每个数据的最大嵌套深度和各结构数
+脚本文件：`count_structure.py` 
+
+运行指令：`python count_structure.py -i processed_data.json -o processed_data_with_stats.json`
