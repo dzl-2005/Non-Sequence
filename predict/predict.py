@@ -2,21 +2,21 @@ import json
 import os
 import time
 from openai import OpenAI
+from collections import defaultdict
 
-MODEL = "deepseek-v4-flash"
+MODEL = "deepseek-v4-pro"
 BASE_URL = "https://api.deepseek.com"
 API_KEY = os.getenv("DEEPSEEK_API_KEY")
 client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
-# 检查点文件路径
 CHECKPOINT_FILE = "eval_checkpoint.json"
+OUTPUT_FILE = "results.json"
 
+# ---------- 辅助函数 ----------
 def load_prompt_template(filepath):
     with open(filepath, "r", encoding="utf-8") as f:
         return f.read()
 
-# 从数据集中提取三条信息组成一个 JSON 字符串，作为 API 调用的用户消息
-# 模型将收到这个 JSON，并需要返回完整的 edges 和 script_graph
 def build_user_message(item):
     inp = {
         "id": item["id"],
@@ -38,7 +38,6 @@ def call_model(system_prompt, user_message):
     )
     return response.choices[0].message.content
 
-# 从文本提取 JSON
 def extract_json(text):
     if "```json" in text:
         json_str = text.split("```json")[1].split("```")[0].strip()
@@ -48,14 +47,11 @@ def extract_json(text):
         json_str = text.strip()
     return json.loads(json_str)
 
-# 对 edges 自动去重并排序 和 对 script_graph 排序
 def normalize_graph(edges, script_graph):
     normalized_edges = sorted(set(edges))
     sg_str = json.dumps(script_graph, sort_keys=True, ensure_ascii=False)
-    # 把 script_graph 这个嵌套的字典整体转成一个JSON字符串，字典里的键会被按字母排序
     return normalized_edges, sg_str
 
-# 检测 edges 集合是否相等与 script_graph 是否相等
 def compare_graphs(gen_edges, gen_sg, ref_edges, ref_sg):
     gen_e, gen_s = normalize_graph(gen_edges, gen_sg)
     ref_e, ref_s = normalize_graph(ref_edges, ref_sg)
@@ -114,44 +110,143 @@ def evaluate_item(item, template, reference_graphs):
         "nodes_valid": nodes_valid,
         "generated_edges": gen["edges"],
         "generated_sg": gen["script_graph"],
+        # 以下仅用于内部评估，不写入最终输出
         "reference_edges": ref_edges,
         "reference_sg": ref_sg
     }
 
-def save_checkpoint(results, processed_ids):
-    """将当前结果和已处理ID列表写入检查点文件"""
-    checkpoint = {
-        "results": results,
-        "processed_ids": processed_ids
-    }
+def save_checkpoint(merged_records):
+    """保存已处理的合并记录到检查点文件"""
     with open(CHECKPOINT_FILE, "w", encoding="utf-8") as f:
-        json.dump(checkpoint, f, ensure_ascii=False, indent=2)
+        json.dump(merged_records, f, ensure_ascii=False, indent=2)
 
 def load_checkpoint():
-    """如果检查点文件存在则加载，否则返回空"""
+    """如果检查点文件存在则加载已合并的记录列表，否则返回空列表"""
     if os.path.exists(CHECKPOINT_FILE):
         with open(CHECKPOINT_FILE, "r", encoding="utf-8") as f:
-            ckpt = json.load(f)
-        return ckpt.get("results", []), set(ckpt.get("processed_ids", []))
-    return [], set()
+            return json.load(f)
+    return []
+
+# ---------- 指标计算 ----------
+def compute_statistics(merged_records, reference_stats):
+    """从合并记录中计算并打印各种正确率指标"""
+    print("=" * 60)
+    total = len(merged_records)
+    if total == 0:
+        print("没有数据可供统计。")
+        return
+
+    total_edges_ok = sum(1 for r in merged_records if r.get("edges_match"))
+    total_sg_ok = sum(1 for r in merged_records if r.get("sg_match"))
+    total_both_ok = sum(1 for r in merged_records if r.get("edges_match") and r.get("sg_match"))
+
+    def safe_div(num, den):
+        return f"{num}/{den}" if den > 0 else "0/0"
+
+    def percent(num, den):
+        return f"{num/den*100:.1f}%" if den > 0 else "N/A"
+
+    print("1. 总体正确率")
+    print(f"   Edges: {percent(total_edges_ok, total)} ({safe_div(total_edges_ok, total)})")
+    print(f"   SG:    {percent(total_sg_ok, total)} ({safe_div(total_sg_ok, total)})")
+    print(f"   Both:  {percent(total_both_ok, total)} ({safe_div(total_both_ok, total)})")
+
+    # 2. 按深度分组
+    depth_groups = defaultdict(list)
+    for r in merged_records:
+        rid = r["id"]
+        stats = reference_stats.get(rid, {})
+        depth = stats.get("max_depth", 0)
+        if depth >= 3:
+            depth = 3
+        depth_groups[depth].append(r)
+    print("\n2. 各最大嵌套深度正确率")
+    for depth in sorted(depth_groups.keys()):
+        recs = depth_groups[depth]
+        n = len(recs)
+        e_ok = sum(1 for r in recs if r["edges_match"])
+        s_ok = sum(1 for r in recs if r["sg_match"])
+        b_ok = sum(1 for r in recs if r["edges_match"] and r["sg_match"])
+        label = f"深度 {depth}" if depth < 3 else "深度 3+"
+        print(f"   {label} (n={n}):")
+        print(f"      Edges: {percent(e_ok, n)} ({safe_div(e_ok, n)})")
+        print(f"      SG:    {percent(s_ok, n)} ({safe_div(s_ok, n)})")
+        print(f"      Both:  {percent(b_ok, n)} ({safe_div(b_ok, n)})")
+
+    # 3. 包含特定非线性结构
+    type_names = ["select", "loop", "and_join"]
+    print("\n3. 包含特定非线性结构的正确率")
+    for tname in type_names:
+        recs = [r for r in merged_records
+                if reference_stats.get(r["id"], {}).get("type_cnt", {}).get(tname, 0) > 0]
+        if not recs:
+            print(f"   包含 {tname}: 无样本")
+            continue
+        n = len(recs)
+        e_ok = sum(1 for r in recs if r["edges_match"])
+        s_ok = sum(1 for r in recs if r["sg_match"])
+        b_ok = sum(1 for r in recs if r["edges_match"] and r["sg_match"])
+        print(f"   包含 {tname} (n={n}):")
+        print(f"      Edges: {percent(e_ok, n)} ({safe_div(e_ok, n)})")
+        print(f"      SG:    {percent(s_ok, n)} ({safe_div(s_ok, n)})")
+        print(f"      Both:  {percent(b_ok, n)} ({safe_div(b_ok, n)})")
+
+    # 4. 纯顺序与混合结构
+    print("\n4. 纯顺序与混合结构正确率")
+    def get_combo(type_cnt):
+        has = []
+        for t in type_names:
+            if type_cnt.get(t, 0) > 0:
+                has.append(t)
+        if not has:
+            return "sequence"
+        has.sort()
+        return "+".join(has)
+
+    combo_groups = defaultdict(list)
+    for r in merged_records:
+        stats = reference_stats.get(r["id"], {})
+        combo = get_combo(stats.get("type_cnt", {}))
+        combo_groups[combo].append(r)
+
+    for combo in sorted(combo_groups.keys()):
+        recs = combo_groups[combo]
+        n = len(recs)
+        e_ok = sum(1 for r in recs if r["edges_match"])
+        s_ok = sum(1 for r in recs if r["sg_match"])
+        b_ok = sum(1 for r in recs if r["edges_match"] and r["sg_match"])
+        print(f"   {combo} (n={n}):")
+        print(f"      Edges: {percent(e_ok, n)} ({safe_div(e_ok, n)})")
+        print(f"      SG:    {percent(s_ok, n)} ({safe_div(s_ok, n)})")
+        print(f"      Both:  {percent(b_ok, n)} ({safe_div(b_ok, n)})")
+
 
 if __name__ == "__main__":
     template = load_prompt_template("prompt_template.txt")
 
-    with open("../intro_structure/processed_data.json", "r", encoding="utf-8") as f:
+    with open("processed_data_with_stats.json", "r", encoding="utf-8") as f:
         dataset = json.load(f)
 
     reference_graphs = {}
+    reference_stats = {}
     for item in dataset:
-        reference_graphs[item["id"]] = {
+        rid = item["id"]
+        reference_graphs[rid] = {
             "edges": item["edges"],
             "script_graph": item["script_graph"]
         }
+        reference_stats[rid] = {
+            "max_depth": item.get("max_depth", 0),
+            "type_cnt": item.get("type_cnt", {})
+        }
 
-    # 尝试从检查点恢复
-    results, processed_ids = load_checkpoint()
-    if results:
-        print(f"从检查点恢复，已处理 {len(results)} 条数据。")
+    # 从断点恢复
+    merged_records = load_checkpoint()
+    if merged_records:
+        print(f"从检查点恢复，已处理 {len(merged_records)} 条数据。")
+
+    # 获取已处理id集合，用于跳过
+    processed_ids = {r["id"] for r in merged_records}
 
     for item in dataset:
         rid = item["id"]
@@ -161,23 +256,28 @@ if __name__ == "__main__":
 
         print(f"Processing {rid}...")
         res = evaluate_item(item, template, reference_graphs)
-        results.append(res)
+
+        # 构建合并记录（只保留需要的字段）
+        record = {
+            "id": rid,
+            "scenario": item["scenario"],
+            "unordered_nodes": item["unordered_nodes"],
+            "edges": res.get("generated_edges", []) if "error" not in res else [],
+            "script_graph": res.get("generated_sg", {"type": "sequence", "script": []}) if "error" not in res else {"type": "sequence", "script": []},
+            "edges_match": res.get("edges_match", False),
+            "sg_match": res.get("sg_match", False)
+        }
+
+        merged_records.append(record)
         processed_ids.add(rid)
 
-        # 每处理完一条立即保存检查点
-        save_checkpoint(results, list(processed_ids))
+        # 实时写入检查点
+        save_checkpoint(merged_records)
         time.sleep(1)
 
-    # 最终保存完整结果
-    with open("evaluation_results.json", "w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
+    # 最终写入合并文件
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(merged_records, f, ensure_ascii=False, indent=2)
 
-    # 统计
-    total = len(results)
-    edges_match = sum(1 for r in results if r.get("edges_match"))
-    sg_match = sum(1 for r in results if r.get("sg_match"))
-    nodes_valid = sum(1 for r in results if r.get("nodes_valid"))
-    print(f"Total: {total}")
-    print(f"Edges exact match: {edges_match} ({edges_match/total*100:.1f}%)")
-    print(f"Script graph exact match: {sg_match} ({sg_match/total*100:.1f}%)")
-    print(f"Nodes valid: {nodes_valid} ({nodes_valid/total*100:.1f}%)")
+    print(f"\n合并文件已保存至 {OUTPUT_FILE}")
+    compute_statistics(merged_records, reference_stats)
