@@ -4100,7 +4100,7 @@
       ],
       [
         "the enclosure's gate latch is at knee height",
-        1,
+        2,
         "medium"
       ],
       [
@@ -4282,17 +4282,17 @@
       ],
       [
         "the door seal breaks and cold air escapes",
-        0,
-        "easy"
+        1,
+        "medium"
       ],
       [
         "a sudden hiss fills the air",
-        0,
+        1,
         "medium"
       ],
       [
         "a soft click echoes from inside",
-        0,
+        1,
         "hard"
       ],
       [
@@ -4330,8 +4330,8 @@
       ],
       [
         "the odometer has added 0.4 miles since they entered the lot",
-        1,
-        "medium"
+        2,
+        "na"
       ],
       [
         "they have already circled past the same silver sedan with a broken taillight twice",
@@ -4449,7 +4449,7 @@
       ],
       [
         "the person directly ahead hands their ticket to the employee",
-        0,
+        1,
         "medium"
       ],
       [
@@ -4511,7 +4511,7 @@
       ],
       [
         "the whirring sound from your computer's fan gradually fades",
-        0,
+        1,
         "hard"
       ],
       [
@@ -4560,11 +4560,6 @@
         "the login screen is displayed",
         0,
         "easy"
-      ],
-      [
-        "the laptop emits a brief startup chime",
-        0,
-        "medium"
       ],
       [
         "your fingers, resting on the keyboard, feel a tiny vibration",
@@ -4781,8 +4776,8 @@
       ],
       [
         "the coffee machine in the hallway has been dripping onto the handwritten language labels on the course folders",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "the latest sweep finds zero misgrouped courses",
@@ -4831,11 +4826,6 @@
         "the officiants reached so far were all unavailable that day",
         1,
         "easy"
-      ],
-      [
-        "no payment has been made toward an officiant's services",
-        1,
-        "medium"
       ],
       [
         "the wedding website does not yet list an officiant name",
@@ -4911,8 +4901,8 @@
       ],
       [
         "the music volume suddenly drops",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "A light breeze rustles the leaves of a nearby tree.",
@@ -4950,11 +4940,6 @@
         "a soft humming sound is coming from the door",
         1,
         "medium"
-      ],
-      [
-        "the door panel is vibrating slightly",
-        1,
-        "hard"
       ],
       [
         "the window glass stops moving upward",
@@ -5009,19 +4994,9 @@
         "medium"
       ],
       [
-        "the edges of the parchment paper are still slightly curled upward",
-        1,
-        "hard"
-      ],
-      [
         "the pan is cool to the touch",
         0,
         "easy"
-      ],
-      [
-        "the edges have begun to pull away from the sides of the pan",
-        0,
-        "medium"
       ],
       [
         "the pan no longer emits steam when you lean over it",
@@ -5235,8 +5210,8 @@
       ],
       [
         "your shadow still stretches ahead from the gym lights",
-        1,
-        "medium"
+        2,
+        "na"
       ],
       [
         "the echo of your footsteps hasn’t shortened into a closed-room sound",
@@ -5297,8 +5272,8 @@
       ],
       [
         "the mirror above the sink has no fresh water droplets",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "the toothbrush is rinsed and placed back in its holder",
@@ -5359,7 +5334,7 @@
       ],
       [
         "He tilts the wallet so the light catches the front of a card.",
-        0,
+        1,
         "hard"
       ],
       [
@@ -5524,16 +5499,6 @@
         "easy"
       ],
       [
-        "the coach picks up the clipboard and starts walking toward the center of the field",
-        0,
-        "medium"
-      ],
-      [
-        "the sprinklers on the infield suddenly hiss to life",
-        0,
-        "hard"
-      ],
-      [
         "A faint smell of rubber from the track surface lingers in the air.",
         2,
         "na"
@@ -5542,53 +5507,6 @@
         "The distant hum of traffic from the adjacent road is just audible over your breathing.",
         2,
         "na"
-      ]
-    ]
-  },
-  {
-    "id": 100,
-    "scenario": "get cookies to correct consistency",
-    "steps": [
-      "grip onto the whisk tightly",
-      "Mix the ingredients",
-      "move the whisk in circles",
-      "watch the thickness of the mixture",
-      "lift the whisk to check thickness",
-      "tap the whisk on the bowl",
-      "get cookies to correct consistency"
-    ],
-    "loop_idx": 1,
-    "loop_step": "Mix the ingredients",
-    "descriptions": [
-      [
-        "the mixture is still too runny and drips quickly off the whisk",
-        1,
-        "easy"
-      ],
-      [
-        "the whisk made a soft slopping sound against the bowl",
-        1,
-        "medium"
-      ],
-      [
-        "the tapping produced a light, tinny echo rather than a dull thud",
-        1,
-        "hard"
-      ],
-      [
-        "the mixture thickens to a soft, cohesive dough that pulls away from the sides of the bowl and clings to the whisk in a single mass",
-        0,
-        "easy"
-      ],
-      [
-        "the whisking sound shifts from a wet slosh to a muted, rhythmic thud",
-        0,
-        "medium"
-      ],
-      [
-        "the bowl starts to shift slightly on the counter with every push of the whisk",
-        0,
-        "hard"
       ]
     ]
   },
@@ -5619,8 +5537,8 @@
       ],
       [
         "only three lampposts have been passed since the turn",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "the feet have reached the bus stop",
@@ -5634,7 +5552,7 @@
       ],
       [
         "the hiss of air brakes and the shuffle of disembarking passengers suddenly fill the space just ahead",
-        0,
+        1,
         "hard"
       ],
       [
@@ -5691,8 +5609,8 @@
       ],
       [
         "you hear loose gravel crunching under your feet",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The car's windshield reflects the sky.",
@@ -5730,11 +5648,6 @@
         "the customer in front of you is still being served",
         1,
         "medium"
-      ],
-      [
-        "the attendant is still looking down at the register",
-        1,
-        "hard"
       ],
       [
         "you reach the front of the line",
@@ -5857,7 +5770,7 @@
       ],
       [
         "the gap between their positions has narrowed to a trivial amount, and the candidate's shoulders have relaxed",
-        0,
+        1,
         "medium"
       ],
       [
@@ -6017,11 +5930,6 @@
         "easy"
       ],
       [
-        "the lifted foot detects a cool draft coming from under the door ahead",
-        0,
-        "medium"
-      ],
-      [
         "the gap under the closet door is now close enough to channel the draft across the ankle",
         0,
         "hard"
@@ -6075,12 +5983,12 @@
       ],
       [
         "the manager reaches under the counter and retrieves a blank form",
-        0,
+        1,
         "medium"
       ],
       [
         "the manager stops typing and slides his chair back",
-        0,
+        1,
         "hard"
       ],
       [
@@ -6251,7 +6159,7 @@
       ],
       [
         "the cat that had been dozing on the rumbling washer suddenly jumps to the floor",
-        0,
+        1,
         "hard"
       ],
       [
@@ -6342,16 +6250,6 @@
         "the item currently being examined is not bleach",
         1,
         "easy"
-      ],
-      [
-        "the bottle is clear and contains a blue liquid",
-        1,
-        "medium"
-      ],
-      [
-        "there is a squeegee in the cabinet beside it",
-        1,
-        "hard"
       ],
       [
         "the bleach bottle is located",
@@ -6481,7 +6379,7 @@
       ],
       [
         "the line where the building’s shadow meets the sunlit pavement has passed beneath your feet",
-        0,
+        1,
         "hard"
       ],
       [
@@ -6533,13 +6431,13 @@
       ],
       [
         "the agenda for next Monday's team meeting just landed in your inbox",
-        0,
-        "medium"
+        2,
+        "na"
       ],
       [
         "the temporary security pass the receptionist handed you on your first day just stopped working at the turnstile",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The break room has a vending machine that only takes exact change.",
@@ -6684,11 +6582,6 @@
         "medium"
       ],
       [
-        "the steering wheel is still turned",
-        1,
-        "hard"
-      ],
-      [
         "the driver can see the parking lines in both side mirrors",
         0,
         "easy"
@@ -6759,7 +6652,7 @@
       ],
       [
         "I just typed the missing 'e' in 'receive",
-        0,
+        1,
         "hard"
       ],
       [
@@ -6815,11 +6708,6 @@
         "the person's hand makes contact with the car",
         0,
         "medium"
-      ],
-      [
-        "the beam of the headlights hits the person's shins instead of the road",
-        0,
-        "hard"
       ],
       [
         "The air carries the scent of freshly applied perfume from the makeup shop.",
