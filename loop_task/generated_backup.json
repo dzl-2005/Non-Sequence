@@ -2314,8 +2314,8 @@
       ],
       [
         "the person in front of you is still wearing their belt",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "you have passed through the metal detector and are in the secure area",
@@ -2381,7 +2381,7 @@
       ],
       [
         "the person behind you nudges your elbow",
-        0,
+        1,
         "medium"
       ],
       [
@@ -2494,8 +2494,8 @@
       ],
       [
         "you see a dish towel draped over a curved object on the counter",
-        0,
-        "medium"
+        2,
+        "na"
       ],
       [
         "you see a corner of a white ceramic object peeking out from under a pile of junk mail.",
@@ -2545,8 +2545,8 @@
       ],
       [
         "the ride attendant steps back from the track area",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The roller coaster's steel track is painted vibrant orange and has a double corkscrew section.",
@@ -2638,7 +2638,7 @@
       ],
       [
         "the parking space lines gleam with fresh, wet paint",
-        1,
+        0,
         "medium"
       ],
       [
@@ -2768,13 +2768,13 @@
       ],
       [
         "the reverse lights of a nearby car flash on",
-        0,
-        "medium"
+        2,
+        "na"
       ],
       [
         "a car's interior dome light turns on",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The gym's neon sign flickers slightly in the evening light.",
@@ -2883,11 +2883,6 @@
         "a faint beep from the garage suggests the equipment might be out there",
         0,
         "medium"
-      ],
-      [
-        "you step on a stray piece of bubble wrap that leads toward the back door",
-        0,
-        "hard"
       ],
       [
         "The living room has a faint scent of lavender from a candle on the coffee table.",
@@ -3115,7 +3110,7 @@
       ],
       [
         "a colorful balloon-shaped flyer on the desk, which you couldn't see before, is now in plain sight",
-        0,
+        1,
         "hard"
       ],
       [
@@ -3157,8 +3152,8 @@
       ],
       [
         "the person in front of you is still picking up a magazine",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "you are standing directly in front of the cashier's counter",
@@ -3317,8 +3312,8 @@
       ],
       [
         "the pen on the counter is still in its holder",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "you have reached the front of the line and the desk clerk says \"Next",
@@ -3417,11 +3412,6 @@
         "no outside sound has filtered in",
         1,
         "medium"
-      ],
-      [
-        "the loose parking stub on the dashboard hasn't stirred",
-        1,
-        "hard"
       ],
       [
         "the door is completely open and cannot swing any further",
@@ -3534,8 +3524,8 @@
       ],
       [
         "the cash register drawer is still open",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "the cashier hands you the receipt and the book",
@@ -3761,8 +3751,8 @@
       ],
       [
         "she hasn't once looked down at her watch or the door",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "she looks up from her phone and glances around the room",
@@ -3834,11 +3824,6 @@
         "medium"
       ],
       [
-        "a discarded candy wrapper flutters across the asphalt for five meters in a straight line without veering around any obstacle",
-        0,
-        "hard"
-      ],
-      [
         "The afternoon sun casts long shadows across the playground.",
         2,
         "na"
@@ -3884,16 +3869,6 @@
         "the person immediately in front of you steps away from the counter",
         0,
         "easy"
-      ],
-      [
-        "the clerk finishes stamping a document and slides it across the counter",
-        0,
-        "medium"
-      ],
-      [
-        "the customer directly in front of you signs a form on the counter",
-        0,
-        "hard"
       ],
       [
         "The air carries a faint scent of fresh photocopier toner.",
@@ -3949,8 +3924,8 @@
       ],
       [
         "a faint pencil tracing of the object's footprint is drawn on the bottom of the box",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The overhead fluorescent lights hum softly, casting a uniform glow on the shelves.",
@@ -4063,8 +4038,8 @@
       ],
       [
         "the turn signal indicator begins flashing after a long period of inactivity",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The grocery store has a large red sign with white letters.",
