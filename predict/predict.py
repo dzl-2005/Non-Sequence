@@ -10,7 +10,7 @@ API_KEY = os.getenv("DEEPSEEK_API_KEY")
 client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 CHECKPOINT_FILE = "eval_checkpoint.json"
-OUTPUT_FILE = "results.json"
+OUTPUT_FILE = "results_v4-pro.json"
 
 # ---------- 辅助函数 ----------
 def load_prompt_template(filepath):
@@ -224,7 +224,7 @@ def compute_statistics(merged_records, reference_stats):
 if __name__ == "__main__":
     template = load_prompt_template("prompt_template.txt")
 
-    with open("processed_data_with_stats.json", "r", encoding="utf-8") as f:
+    with open("../intro_structure/processed_data_with_stats.json", "r", encoding="utf-8") as f:
         dataset = json.load(f)
 
     reference_graphs = {}

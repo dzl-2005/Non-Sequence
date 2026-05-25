@@ -146,11 +146,6 @@
         "medium"
       ],
       [
-        "you hear the heavy entrance door unlatch and swing open",
-        0,
-        "hard"
-      ],
-      [
         "A group of fans behind you are chatting excitedly about the opening act.",
         2,
         "na"
@@ -200,8 +195,8 @@
       ],
       [
         "a gentle flapping sound is heard among the leaves",
-        0,
-        "medium"
+        2,
+        "na"
       ],
       [
         "a small, erratic shadow dances on the ground ahead",
@@ -318,74 +313,12 @@
         "medium"
       ],
       [
-        "the schedule for the next semester's classes is posted on the bulletin board",
-        0,
-        "hard"
-      ],
-      [
         "The dance studio is located in the basement of the student union building.",
         2,
         "na"
       ],
       [
         "The flyer mentioned that the instructor is a former professional dancer.",
-        2,
-        "na"
-      ]
-    ]
-  },
-  {
-    "id": 7,
-    "scenario": "try high diving",
-    "steps": [
-      "sign up for a diving class",
-      "attend weekly diving classes",
-      "learn proper diving form",
-      "practice diving from a low board",
-      "climb to the high dive",
-      "stand at the edge of the high dive",
-      "try high diving"
-    ],
-    "loop_idx": 3,
-    "loop_step": "practice diving from a low board",
-    "descriptions": [
-      [
-        "the diver still hesitates before jumping",
-        1,
-        "easy"
-      ],
-      [
-        "the surface of the water below the low board remains completely calm",
-        1,
-        "medium"
-      ],
-      [
-        "the instructor is still demonstrating the entry technique on the pool deck",
-        1,
-        "hard"
-      ],
-      [
-        "you can consistently dive from the low board with proper form and no splash",
-        0,
-        "easy"
-      ],
-      [
-        "you start to notice the pattern of tiles on the bottom of the pool",
-        0,
-        "medium"
-      ],
-      [
-        "the pool water becomes still between your dives",
-        0,
-        "hard"
-      ],
-      [
-        "The pool water shimmers under the overhead lights.",
-        2,
-        "na"
-      ],
-      [
-        "A faint hum comes from the filtration system.",
         2,
         "na"
       ]
@@ -434,8 +367,8 @@
       ],
       [
         "the oven window has steamed up and then cleared",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The kitchen floor tiles are a checkerboard pattern of white and pale blue.",
@@ -992,11 +925,6 @@
         "easy"
       ],
       [
-        "the daily reminder notification from the cooking school fails to appear",
-        0,
-        "medium"
-      ],
-      [
         "the sign outside the cooking school has changed from \"Class in Session\" to \"Available for Private Events",
         0,
         "hard"
@@ -1008,62 +936,6 @@
       ],
       [
         "Your car's air conditioner makes a faint humming sound even when it's off.",
-        2,
-        "na"
-      ]
-    ]
-  },
-  {
-    "id": 19,
-    "scenario": "stop having a monotonous boring life",
-    "steps": [
-      "find a hobby",
-      "find location to practice hobby",
-      "drive to locations",
-      "enter hobby location",
-      "go everyday to stop having a boring life",
-      "stop having a monotonous boring life"
-    ],
-    "loop_idx": 4,
-    "loop_step": "go everyday to stop having a boring life",
-    "descriptions": [
-      [
-        "the feeling of boredom returns the next morning",
-        1,
-        "easy"
-      ],
-      [
-        "the new membership card for the hobby location remains uncreased in a drawer",
-        1,
-        "medium"
-      ],
-      [
-        "the houseplant on the windowsill has a new leaf, but the car keys haven't moved from the hook",
-        1,
-        "hard"
-      ],
-      [
-        "you begin to feel a sense of loss on days you skip, showing the hobby has become a genuine interest",
-        0,
-        "easy"
-      ],
-      [
-        "your calendar for the month fills with non-hobby commitments that you resent",
-        0,
-        "medium"
-      ],
-      [
-        "you find yourself buying coffee at the café next door to the hobby location without even glancing at its door",
-        0,
-        "hard"
-      ],
-      [
-        "The walls of the hobby location are decorated with abstract paintings.",
-        2,
-        "na"
-      ],
-      [
-        "A faint hum of traffic can be heard from outside the building.",
         2,
         "na"
       ]
@@ -1107,11 +979,6 @@
         "the exact words of the video’s cues pop into your mind as you jump",
         0,
         "medium"
-      ],
-      [
-        "the pause button on the video is no longer worn out",
-        0,
-        "hard"
       ],
       [
         "There's a faint hum from the refrigerator in the next room.",
@@ -1184,121 +1051,6 @@
     ]
   },
   {
-    "id": 22,
-    "scenario": "try practicing yoga",
-    "steps": [
-      "Look up yoga tutorials online",
-      "Pick a video",
-      "Play the video",
-      "Pause the video",
-      "Practice the move",
-      "Hold the move for a few seconds",
-      "Play the video again",
-      "try practicing yoga"
-    ],
-    "loop_idx": 6,
-    "loop_step": "Play the video again",
-    "descriptions": [
-      [
-        "the video has more moves to demonstrate",
-        1,
-        "easy"
-      ],
-      [
-        "the video's progress bar is only halfway across the screen",
-        1,
-        "medium"
-      ],
-      [
-        "the background music still has an energetic tempo typical of the middle of a session",
-        1,
-        "hard"
-      ],
-      [
-        "the video ends",
-        0,
-        "easy"
-      ],
-      [
-        "the screen displays a replay icon over the video thumbnail",
-        0,
-        "medium"
-      ],
-      [
-        "I notice I've been holding the pose far longer than the usual count",
-        0,
-        "hard"
-      ],
-      [
-        "The yoga mat is a deep shade of purple, slightly worn at the edges.",
-        2,
-        "na"
-      ],
-      [
-        "In the background, the faint hum of a refrigerator can be heard.",
-        2,
-        "na"
-      ]
-    ]
-  },
-  {
-    "id": 23,
-    "scenario": "get into better shape",
-    "steps": [
-      "go to google",
-      "search for a gym",
-      "go to the sign up page",
-      "sign up for the gym",
-      "pay the fee",
-      "go to the gym most days",
-      "get into better shape"
-    ],
-    "loop_idx": 6,
-    "loop_step": "go to the gym most days",
-    "descriptions": [
-      [
-        "the week's gym attendance stands at 2 days out of 7",
-        1,
-        "easy"
-      ],
-      [
-        "a thin layer of dust has settled on the gym sneakers by the door",
-        1,
-        "medium"
-      ],
-      [
-        "the 'recently played' section of their music streaming service hasn't featured any workout playlists this month",
-        1,
-        "hard"
-      ],
-      [
-        "the gym membership expires",
-        0,
-        "easy"
-      ],
-      [
-        "the gym's front desk staff no longer recognizes your face",
-        0,
-        "medium"
-      ],
-      [
-        "the locker you always used now has someone else's lock on it",
-        0,
-        "hard"
-      ],
-      [
-        "The gym's floor is covered with interlocking rubber mats.",
-        2,
-        "na"
-      ],
-      [
-        "There is a large mural of a mountain landscape on one wall.",
-        2,
-        "na"
-      ]
-    ]
-  },
-  {
     "id": 24,
     "scenario": "join the beauty pageant to win 1st prize",
     "steps": [
@@ -1319,8 +1071,8 @@
       ],
       [
         "your feet are starting to ache from standing in the same spot",
-        1,
-        "medium"
+        2,
+        "na"
       ],
       [
         "the same pair of shoes is still visible through the gap under the audition door",
@@ -1495,13 +1247,13 @@
       ],
       [
         "the morning announcements state that the pool is open for use",
-        0,
-        "medium"
+        2,
+        "na"
       ],
       [
         "the vending machine beside the pool gate is restocked with fresh snacks",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The pool water is slightly cooler than usual today.",
@@ -1510,64 +1262,6 @@
       ],
       [
         "You notice a faint echo off the tiled walls with each stroke.",
-        2,
-        "na"
-      ]
-    ]
-  },
-  {
-    "id": 28,
-    "scenario": "make a garden",
-    "steps": [
-      "Travel to gardening store",
-      "Ask store clerk about needed materials for garden",
-      "Purchase needed materials",
-      "Load materials and drive home",
-      "Unload materials and make garden plot",
-      "Plant seeds in garden soil",
-      "Water daily as needed",
-      "make a garden"
-    ],
-    "loop_idx": 6,
-    "loop_step": "Water daily as needed",
-    "descriptions": [
-      [
-        "the soil moisture level remains below the recommended range",
-        1,
-        "easy"
-      ],
-      [
-        "each morning, a finger pressed into the soil comes out clean and dry",
-        1,
-        "medium"
-      ],
-      [
-        "the garden has no shade from the midday heat",
-        1,
-        "hard"
-      ],
-      [
-        "the plants have become established and the soil retains moisture for several days",
-        0,
-        "easy"
-      ],
-      [
-        "a thick layer of straw mulch now covers the garden bed",
-        0,
-        "medium"
-      ],
-      [
-        "a fresh cobweb stretches from the outdoor faucet handle to the wall",
-        0,
-        "hard"
-      ],
-      [
-        "The garden plot is bordered by a low wooden fence painted white.",
-        2,
-        "na"
-      ],
-      [
-        "A pair of gardening gloves rests on the edge of the wheelbarrow.",
         2,
         "na"
       ]
@@ -1611,11 +1305,6 @@
         "the instructor hands you a flyer for a local milonga and says 'see you there",
         0,
         "medium"
-      ],
-      [
-        "the studio’s resident cat no longer bolts from the room when you dance",
-        0,
-        "hard"
       ],
       [
         "The studio's wooden floor has a faint scent of lemon polish",
@@ -1726,8 +1415,8 @@
       ],
       [
         "the scent of hot asphalt and hand sanitizer drifts through the air conditioning vent",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The radio is playing a nostalgic 90s pop song.",
@@ -1826,11 +1515,6 @@
         "you notice the restaurant's neon sign glowing through the windshield",
         0,
         "medium"
-      ],
-      [
-        "the steering wheel suddenly becomes much easier to turn",
-        0,
-        "hard"
       ],
       [
         "The restaurant's specialty is seafood paella.",
@@ -2039,11 +1723,6 @@
         "medium"
       ],
       [
-        "the scent of pine trees from the last stretch of road still fills the car",
-        1,
-        "hard"
-      ],
-      [
         "the car is parked in front of the store",
         0,
         "easy"
@@ -2055,8 +1734,8 @@
       ],
       [
         "the odometer's numbers remain fixed as you glance at the dashboard",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The car's clock is stuck at 3:17.",
