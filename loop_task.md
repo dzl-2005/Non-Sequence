@@ -206,8 +206,11 @@
      }
    }
    ```
+
 2. `filter_dev.py` 说明：我们筛选数据集中 `script_graph` 仅包含 `sequence` 一种类型的数据（排除 `and_join` 这种稍显复杂，同时无法用单一事件链表示的结构），对 `id` 进行重新编号，保留 `scenario`，删除`unordered_nodes`，`edges`，`script_graph`，新增 `steps` 字段，按照原数据中的 `script_graph ` 中的顺序，对原 `unordered_nodes` 中的事件进行排序，得到 `filter_dev.json`
+
 3. `filter_loop_dev.py` 说明：利用大模型筛选出 `filter_dev.json` 数据集中暗含循环语义的数据（例如，包含 `repeat`，`until` ，`wait` 等关键字），得到 `filter_loop_dev.json` （180条）
+
 4. `filter_loop_quality_dev.py` 说明：利用大模型筛选出 `filter_loop_dev.json` 中更适合后续任务的数据，以下是符合条件的数据的特征：
 
    - 循环条件具有**发展性**，例如：水加热 → 小气泡 → 大气泡 → 剧烈沸腾
@@ -215,6 +218,7 @@
    - 循环的状态可以从**不同类型的的观察**中推断（视觉、听觉、触觉等）
 
    得到 `filter_loop_quality_dev.json`
+
 5. `prompt_generate.py`说明：利用大模型按指定范式生成规范数据 `generated_backup.json` ：
 
    - continue/stop：在同一上下文中，依次读取如下提示词，对应生成 `easy`，`medium`，`hard` 数据
@@ -260,5 +264,16 @@
      Return a JSON array of exactly two strings.
      Only output the JSON array, nothing else.
      ```
-6. `loop_task_judge` ：隐藏答案和难度，让大模型判断答案，统计各难度正确率和混淆矩阵
-7. `loop_task_noise` ：生成噪声，检验模型抗噪能力
+
+6. `loop_task_judge` ：隐藏答案和难度，让大模型判断答案，统计各难度正确率和混淆矩阵；之后对大模型判断错误的答案进行人工检查，执行必要的修改和删除
+
+7. `loop_task_judge` 结果：多轮检测下，正确率与难度呈负相关关系，说明任务中生成数据的方式可取，详细内容可参考相关文件
+
+8. 问题
+
+   - 模型经两轮抽取的暗含循环语义的数据仍有部分质量欠佳，不适合展开；同时出现了事件场景单一的情况（如停车），但是模型可以结合具体的场景情况生成不同的描述，说明提示词内容有可取之处
+   - 对模型生成的描述及其对应答案，我们进行了较多的修改和删除（我们感觉描述与答案不一致），此方式不仅耗时，而且标注判断因人而异，产生偏见。即对于模型初步生成的描述数据究竟应该如何处理需要进一步探讨
+   - 在多轮测试下，`V4-flash` 在各难度下正确率均高于 `V4-pro` ，我们推测
+   - 后续是否要挑选人员进行实际测试
+
+   

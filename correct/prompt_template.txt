@@ -7,7 +7,7 @@ An event graph may contain AND‑JOIN structures with these properties:
 
 **Your job:**
 1. Check if the current edges form a connected directed acyclic graph.
-2. Find errors: missing necessary edges, reversed edges, incorrectly parallelized branches, or implausible ordering.
+2. Find errors: redundant edges, missing necessary edges, reversed edges, incorrectly parallelized branches, or implausible ordering.
 3. Produce a CORRECTED version of the edges and the recalculated `script_graph` (as a nested "sequence" with optional "and_join" objects).
 4. Provide a change log that explains what you modified.
 

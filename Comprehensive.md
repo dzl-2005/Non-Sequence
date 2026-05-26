@@ -1009,3 +1009,148 @@
 
    - 循环结构的问题较为严重，目前对循环结构的定义范式存在不足
    - 后续可以加大结构的复杂度
+
+
+
+### 七、后续处理 2nd
+
+1. **数据质量提高**
+
+   本轮在引入选择和循环结构时使用 `deepseek-v4-pro` 得到新的 `processed_data.json`，使得 `select`（约占7.5%） 和 `loop` （约占15%）结构的引入率提高至 23%，且数据结构复杂程度（嵌套深度大于等于3的数据约占5%），语义表达合理性和丰富性得到了明显提高
+
+2. **循环结构解释**
+
+   第一轮在解释循环结构时，`entry` 是循环入口，`retry` 是循环体，`exit` 是循环出口，要求 `entry` 到 `exit` 必须有一条边，表示条件满足时不进行循环。并在评估时发现，`entry` $\rightarrow$ `exit` 很多时候在逻辑上解释不通顺，这是因为对于大部分的循环，其循环体是要执行的，不进行循环的反而是少数
+
+   目前对循环结构的解释作以下修改：`entry` 是循环入口，**`enrty` 和 `retry` 共同构成循环体**，`exit` 是循环出口，`entry` 到 `exit` 必须有一条边表示循环体的退出通道，允许 `entry` $\rightarrow$ `exit` 逻辑不通顺但不允许不合理
+
+   ~~既可以解释为从 `entry` 退出也可以解释为从  `retry` 退出，只是形式上这条边为 `entry` $\rightarrow$ `exit`~~
+
+3. `count_struct.py` 对数据的嵌套最大深度，以及四种结构的数量进行计数，并将结果作为标注添加到原数据集 `processed_data.json` 得到 `processed_data_with_stats.json` ，作为后续难度参考的其他度量
+
+   - 统计最大嵌套深度对应的正确率（最大深度特定数量较少的情况可以写成区间形式）
+
+   - 统计含 `select` ，`loop`，`and_join` 数据的正确率 （只要包含，无论是否含有其他结构）
+
+   - 统计纯顺序结构的正确率（1类），统计混合结构的正确率（只含两、三种结构的情况各有3类，含四种有1类）
+
+   - 各结构**数量**与正确率的关系（由于单项数据中 `select`，`loop`，`and_join` 大于等于2的情况极少，该项评估已舍弃）
+
+     - 独立分析 `select`，`loop`，`and_join` 数量对正确率的影响
+     - 结合两种/三种非线性结构，计算正确率，即给定向量（select，loop，and_join) 表示结构数量。按照独立分析的结果，对于结构特定数量较少的情况可以写成区间形式
+
+   - 问题：
+
+     - 嵌套深度是否需要结合具体结构
+     - **某些深度/组合样本极少，需要标注样本总量**
+
+     - 混合统计存在一个问题，计算正确率时无法识别错误来因（例如，对于含有 顺序+选择+循环 结构的数据，可能顺序和选择全正确，只有循环出现问题），需要解决**子结构匹配评估**问题
+
+4. **节点重复**
+
+   在评估数据集质量时发现在包含循环的数据中出现重复节点，27/1078 $\approx$ 2.5%，27/171 $\approx$ 15.8%，其中 18/27 $\approx$ 66.7% 语义合理 ，我们允许**存在循环结构的数据拥有重复节点**，并保留语义合理的数据，对不合理的数据进行手动修改
+
+   ```json
+   {
+     "id": 303,
+     "scenario": "have money to buy things",
+     "unordered_nodes": {
+       "0": "attend job interview",
+       "1": "start saving money",
+       "2": "apply for a job",
+       "3": "drive to the interview",
+       "4": "get in the car",
+       "5": "make a purchase",
+       "6": "rejected",
+       "7": "get job offer"
+     },
+     "edges": [
+       "2->4",
+       "4->3",
+       "3->0",
+       "0->6",
+       "0->7",
+       "6->2",
+       "7->1",
+       "1->5"
+     ],
+     "script_graph": {
+       "type": "sequence",
+       "script": [
+         "2",
+         "4",
+         "3",
+         {
+           "type": "loop",
+           "entry": "0",
+           "retry": [
+             "6",
+             "2",
+             "4",
+             "3",
+             "continue"
+           ],
+           "exit": "7"
+         },
+         "1",
+         "5"
+       ]
+     }
+   }
+   ```
+
+   ```json
+   {
+     "id": 874,
+     "scenario": "Negotiate the contract with the interviewer",
+     "unordered_nodes": {
+       "1": "Lower the amount wanted",
+       "2": "Make an offer higher than what is wanted",
+       "3": "Decide on an amount wanted",
+       "4": "Listen to the counter offer",
+       "5": "Receive the job offer from the interviewer",
+       "7": "assess counter offer",
+       "8": "accept counter offer and finalize"
+     },
+     "edges": [
+       "5->3",
+       "3->2",
+       "2->4",
+       "4->7",
+       "7->8",
+       "7->1",
+       "1->2"
+     ],
+     "script_graph": {
+       "type": "sequence",
+       "script": [
+         "5",
+         "3",
+         "2",
+         "4",
+         {
+           "type": "loop",
+           "entry": "7",
+           "retry": [
+             "1",
+             "2",
+             "4",
+             "continue"
+           ],
+           "exit": "8"
+         }
+       ]
+     }
+   }
+   ```
+
+5. 评估结果
+
+   使用 `DeepSeek-V4-flash/pro` 和 `Qwen3.6-plus` 仅根据 scenario 和 unordered_nodes 生成 edges 和 script_graph ，并计算各类别的正确率
+
+6. 问题
+
+   - 正确率普遍较低，缺少软指标
+     - 使用大模型对预测生成的事件图进行打分（逻辑错误：0分；逻辑可接受：0.5分；逻辑正确：1分）
+     - 计算生成的 edges 和 标准 edges 所构成的图的相似度（如生成的图需要几步转换为标准的图）
+   - 部分类别的样本量较少，正确率置信度低
