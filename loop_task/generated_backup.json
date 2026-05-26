@@ -684,7 +684,7 @@
         "easy"
       ],
       [
-        "you haven't yet encountered a review mentioning any game released before 2020",
+        "you have not yet encountered any reviews mentioning games released in recent years",
         1,
         "medium"
       ],
@@ -799,11 +799,6 @@
         "your feet still crunch with every step you take",
         1,
         "medium"
-      ],
-      [
-        "the garden hose is still completely visible along its length",
-        1,
-        "hard"
       ],
       [
         "the ground is clear of leaves",
@@ -1621,7 +1616,7 @@
         "easy"
       ],
       [
-        "you receive an email from the organizers with final race-day instructions",
+        "you receive an email from the organizers with final race-day (tomorrow) instructions",
         0,
         "medium"
       ],
@@ -1775,8 +1770,8 @@
       ],
       [
         "the radio is still playing a regular FM station, not the drive-in's movie audio channel",
-        1,
-        "hard"
+        2,
+        "na"
       ],
       [
         "the car is shifted into park facing the screen",
@@ -1832,8 +1827,8 @@
       ],
       [
         "you smell damp earth and grass",
-        0,
-        "medium"
+        2,
+        "na"
       ],
       [
         "you notice the current's tug on your legs has stopped",
@@ -2336,7 +2331,7 @@
         "medium"
       ],
       [
-        "a parking payment kiosk prints a receipt and the screen flashes 'thank you",
+        "you notice that a parking payment kiosk prints a receipt and the screen flashes 'thank you",
         0,
         "hard"
       ],
@@ -3387,8 +3382,8 @@
       ],
       [
         "a car's dome light extinguishes",
-        0,
-        "hard"
+        2,
+        "na"
       ],
       [
         "The faint scent of cotton candy and fried dough drifts through the open car windows.",
@@ -3755,7 +3750,7 @@
       [
         "the enclosure's gate latch is at knee height",
         2,
-        "medium"
+        "na"
       ],
       [
         "a few hollow logs lie nearby, their openings just wide enough for a raccoon to squeeze through",
@@ -3936,7 +3931,7 @@
       ],
       [
         "the door seal breaks and cold air escapes",
-        1,
+        0,
         "medium"
       ],
       [
@@ -4347,63 +4342,6 @@
     ]
   },
   {
-    "id": 85,
-    "scenario": "dress in running clothes",
-    "steps": [
-      "practice until day of race",
-      "set an alarm",
-      "turn off alarm",
-      "get out of bed",
-      "walk to the closet",
-      "retrieve running clothes",
-      "dress in running clothes"
-    ],
-    "loop_idx": 0,
-    "loop_step": "practice until day of race",
-    "descriptions": [
-      [
-        "the race is still in the future",
-        1,
-        "easy"
-      ],
-      [
-        "the running shoes haven’t been broken in yet",
-        1,
-        "medium"
-      ],
-      [
-        "the alarm clock is set for an early morning training run tomorrow",
-        1,
-        "hard"
-      ],
-      [
-        "it is race day",
-        0,
-        "easy"
-      ],
-      [
-        "you notice a race number pinned to your singlet",
-        0,
-        "medium"
-      ],
-      [
-        "a safety pin glints in the light as you unfold your singlet",
-        0,
-        "hard"
-      ],
-      [
-        "The closet door has a small scratch from moving furniture last year.",
-        2,
-        "na"
-      ],
-      [
-        "There is a faint scent of lavender detergent in the air.",
-        2,
-        "na"
-      ]
-    ]
-  },
-  {
     "id": 86,
     "scenario": "sort courses by languages taught",
     "steps": [
@@ -4750,11 +4688,6 @@
         "no confirmation tone has sounded",
         1,
         "medium"
-      ],
-      [
-        "the accept button's backlight is still on",
-        1,
-        "hard"
       ],
       [
         "the payment pad displays a confirmation message",
@@ -5466,8 +5399,8 @@
       ],
       [
         "the bag of flour is still tied shut on the pantry shelf",
-        1,
-        "medium"
+        2,
+        "na"
       ],
       [
         "the kitchen drawer with the scissors remains closed",
@@ -6012,7 +5945,7 @@
         "easy"
       ],
       [
-        "the store's sliding doors are still closed",
+        "you haven't stepped into the sensor area of the store's sliding door yet",
         1,
         "medium"
       ],

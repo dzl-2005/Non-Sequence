@@ -1,7 +1,8 @@
 """
-隐藏答案评估脚本（含混淆统计）
+隐藏答案评估脚本（含混淆统计 + 原因提取）
 读取 descriptions_dev.json，使用大模型对每个描述进行 0/1/2 判断，
 与标准答案对比，输出准确率统计和条件概率混淆矩阵。
+同时保存每个预测的原因到独立的 JSON 文件。
 """
 import json
 import os
@@ -10,9 +11,8 @@ from collections import defaultdict
 from openai import OpenAI
 
 # ========== 配置 ==========
-# INPUT_FILE = "../descriptions_dev.json"
 INPUT_FILE = "../generated_backup.json"
-PROMPT_FILE = "prompt_judge.txt"
+PROMPT_FILE = "prompt_judge_reason.txt"
 MODEL_NAME = "deepseek-v4-pro"
 
 API_KEY_ENV = "DEEPSEEK_API_KEY"
@@ -56,6 +56,7 @@ def call_api(messages):
 
 
 def parse_prediction(raw):
+    """从原始文本中提取第一个 0/1/2 数字"""
     raw = raw.strip()
     try:
         val = int(raw)
@@ -70,10 +71,31 @@ def parse_prediction(raw):
     return None
 
 
+def parse_prediction_with_reason(raw):
+    """
+    从模型返回中提取预测数字和原因。
+    要求模型输出格式为：第一行数字，第二行原因。
+    如果解析失败，回退到原有方法，原因设为原始响应。
+    """
+    raw = raw.strip()
+    lines = raw.split('\n')
+    pred = None
+    reason = ""
+    if lines:
+        first_line = lines[0].strip()
+        pred = parse_prediction(first_line)
+        if len(lines) > 1:
+            reason = ' '.join(line.strip() for line in lines[1:]).strip()
+    if pred is None:
+        # 回退：尝试从整个文本中提取数字，原因置为整个响应
+        pred = parse_prediction(raw)
+        reason = raw if raw else ""
+    return pred, reason
+
+
 # ========== 评估主流程 ==========
 all_results = []
 stats = defaultdict(lambda: defaultdict(int))
-# 新增混淆统计：dict[(true_answer, difficulty)][predicted] = count
 confusion = defaultdict(lambda: defaultdict(int))
 
 total_items = len(data)
@@ -112,17 +134,18 @@ for idx, item in enumerate(data, 1):
             print(f"  描述 {desc_idx + 1}/{len(descriptions)}: API 失败，跳过")
             continue
 
-        pred = parse_prediction(response)
+        pred, reason = parse_prediction_with_reason(response)
         if pred is None:
             print(f"  描述 {desc_idx + 1}: 无法解析预测值，原始输出：{response[:50]}...")
-            continue
+            reason = response[:200] if response else ""
+            pred = -1  # 标记错误
 
         is_correct = (pred == true_answer)
         if is_correct:
             correct_count += 1
         total_count += 1
 
-        all_results.append({
+        result_entry = {
             "item_id": item["id"],
             "scenario": scenario,
             "desc_idx": desc_idx,
@@ -130,8 +153,10 @@ for idx, item in enumerate(data, 1):
             "true_answer": true_answer,
             "predicted": pred,
             "difficulty": difficulty,
-            "correct": is_correct
-        })
+            "correct": is_correct,
+            "reason": reason
+        }
+        all_results.append(result_entry)
 
         # 基本统计
         stats["overall"]["total"] += 1
@@ -153,7 +178,6 @@ for idx, item in enumerate(data, 1):
         if is_correct:
             stats[joint_key]["correct"] += 1
 
-        # 混淆矩阵计数
         confusion[(true_answer, difficulty)][pred] += 1
 
         print(f"  描述 {desc_idx + 1} [{difficulty}] 真实: {true_answer}, "
@@ -162,7 +186,7 @@ for idx, item in enumerate(data, 1):
     if idx < total_items:
         time.sleep(SLEEP_BETWEEN_ITEMS)
 
-# ========== 输出评估报告 ==========
+# ========== 输出评估报告（同原脚本） ==========
 print("\n" + "=" * 60)
 print("评估报告")
 print("=" * 60)
@@ -193,17 +217,16 @@ for ans in [0, 1, 2]:
         if joint_key in stats and stats[joint_key]["total"] > 0:
             print_stat(f"  Ans={ans}, Diff={diff}", stats[joint_key])
 
-# ========== 条件概率混淆矩阵 ==========
+# ========== 混淆矩阵 ==========
 print("\n" + "=" * 60)
 print("条件概率混淆矩阵 (真实答案 → 预测分布)")
 print("=" * 60)
 
-col_width = 9  # 每列宽度（不含列间距）
-sep_str = " "  # 列间分隔符
+col_width = 9
+sep_str = " "
 
 
 def make_row(first, values):
-    """生成对齐的行：第一列左对齐，后续每列右对齐，列间固定分隔符"""
     row = f"{first:<{col_width}}"
     for v in values:
         row += sep_str + f"{v:>{col_width}}"
@@ -216,7 +239,6 @@ for diff in ["easy", "medium", "hard", "na"]:
     sep_line = "-" * len(header)
     print(header)
     print(sep_line)
-
     for true_ans in [0, 1, 2]:
         key = (true_ans, diff)
         total = sum(confusion[key].values())
@@ -225,14 +247,12 @@ for diff in ["easy", "medium", "hard", "na"]:
         counts = [confusion[key].get(p, 0) for p in [0, 1, 2]]
         row = make_row(str(true_ans), counts + [total])
         print(row)
-
     print(sep_line)
     total_counts = [sum(confusion[(t, diff)].get(p, 0) for t in [0, 1, 2]) for p in [0, 1, 2]]
     total_all = sum(total_counts)
     total_row = make_row("Total", total_counts + [total_all])
     print(total_row)
 
-# 总体混淆矩阵
 print("\n" + "=" * 60)
 print("总体混淆矩阵（不区分难度）")
 print("=" * 60)
@@ -240,7 +260,6 @@ header = make_row("True/Pred", [0, 1, 2, "Total"])
 sep_line = "-" * len(header)
 print(header)
 print(sep_line)
-
 for true_ans in [0, 1, 2]:
     counts = []
     for pred_ans in [0, 1, 2]:
@@ -251,7 +270,6 @@ for true_ans in [0, 1, 2]:
     total_true = sum(counts)
     row = make_row(str(true_ans), counts + [total_true])
     print(row)
-
 print(sep_line)
 grand_counts = []
 for pred_ans in [0, 1, 2]:
@@ -264,9 +282,25 @@ grand_total = sum(grand_counts)
 total_row = make_row("Total", grand_counts + [grand_total])
 print(total_row)
 
-# 保存详细结果
-with open("evaluation_details_pro.json", "w", encoding="utf-8") as f:
+# ========== 保存结果 ==========
+with open("evaluation_details_pro_4.json", "w", encoding="utf-8") as f:
     json.dump(all_results, f, indent=2, ensure_ascii=False)
 
-print(f"\n详细评估结果已保存至 evaluation_details_pro.json")
+# 单独保存原因文件（精简版）
+reasons_only = []
+for res in all_results:
+    reasons_only.append({
+        "item_id": res["item_id"],
+        "scenario": res["scenario"],
+        "desc_idx": res["desc_idx"],
+        "description": res["description"],
+        "true_answer": res["true_answer"],
+        "predicted": res["predicted"],
+        "reason": res["reason"]
+    })
+with open("evaluation_reasons.json", "w", encoding="utf-8") as f:
+    json.dump(reasons_only, f, indent=2, ensure_ascii=False)
+
+print(f"\n详细评估结果已保存至 evaluation_details_pro_4.json")
+print(f"预测原因已单独保存至 evaluation_reasons.json")
 print(f"总预测数: {total_count}, 正确数: {correct_count}, 总体准确率: {correct_count / total_count * 100:.2f}%" if total_count > 0 else "")
