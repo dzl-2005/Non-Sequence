@@ -222,9 +222,9 @@ def compute_statistics(merged_records, reference_stats):
 
 
 if __name__ == "__main__":
-    template = load_prompt_template("prompt_template.txt")
+    template = load_prompt_template("prompt_predict.txt")
 
-    with open("../intro_structure/processed_data_with_stats.json", "r", encoding="utf-8") as f:
+    with open("../intro_structure/stats/processed_data_with_stats.json", "r", encoding="utf-8") as f:
         dataset = json.load(f)
 
     reference_graphs = {}

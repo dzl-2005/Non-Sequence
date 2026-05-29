@@ -911,7 +911,7 @@
         "7"
       ]
     },
-    "edges_match": false,
+    "edges_match": true,
     "sg_match": true
   },
   {
@@ -1150,7 +1150,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 30,
@@ -3476,7 +3476,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 93,
@@ -4785,7 +4785,7 @@
         "1"
       ]
     },
-    "edges_match": false,
+    "edges_match": true,
     "sg_match": true
   },
   {
@@ -5198,7 +5198,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 138,
@@ -7305,7 +7305,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 194,
@@ -7426,7 +7426,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 197,
@@ -8526,13 +8526,13 @@
               "0"
             ],
             "b2": [
-              "5"
+              "1"
             ],
             "b3": [
               "4"
             ],
             "b4": [
-              "1"
+              "5"
             ]
           }
         },
@@ -9225,10 +9225,10 @@
           "type": "and_join",
           "branches_set": {
             "b1": [
-              "4"
+              "3"
             ],
             "b2": [
-              "3"
+              "4"
             ]
           }
         },
@@ -9239,7 +9239,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 244,
@@ -9721,10 +9721,10 @@
           "type": "and_join",
           "branches_set": {
             "b1": [
-              "2"
+              "1"
             ],
             "b2": [
-              "1"
+              "2"
             ]
           }
         },
@@ -10269,10 +10269,10 @@
           "type": "and_join",
           "branches_set": {
             "b1": [
-              "4"
+              "0"
             ],
             "b2": [
-              "0"
+              "4"
             ]
           }
         },
@@ -14023,7 +14023,7 @@
         "7"
       ]
     },
-    "edges_match": false,
+    "edges_match": true,
     "sg_match": true
   },
   {
@@ -17125,7 +17125,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 449,
@@ -17972,7 +17972,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 471,
@@ -20363,7 +20363,7 @@
         }
       ]
     },
-    "edges_match": false,
+    "edges_match": true,
     "sg_match": true
   },
   {
@@ -20619,10 +20619,10 @@
           "type": "and_join",
           "branches_set": {
             "b1": [
-              "4"
+              "1"
             ],
             "b2": [
-              "1"
+              "4"
             ]
           }
         },
@@ -20638,7 +20638,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 541,
@@ -24314,7 +24314,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 635,
@@ -26465,7 +26465,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 688,
@@ -32911,11 +32911,11 @@
           "type": "and_join",
           "branches_set": {
             "b1": [
-              "4",
-              "1"
+              "2"
             ],
             "b2": [
-              "2"
+              "4",
+              "1"
             ]
           }
         },
@@ -32925,7 +32925,7 @@
       ]
     },
     "edges_match": true,
-    "sg_match": false
+    "sg_match": true
   },
   {
     "id": 850,

@@ -1,4 +1,3 @@
-# 在LLM进行逻辑修正后的数据集上，引入选择和循环结构
 
 import os
 import json
@@ -6,9 +5,9 @@ import time
 from openai import OpenAI
 
 # -------------------- 配置 --------------------
-MODEL = "deepseek-v4-flash"  # DeepSeek V4 Flash 模型
+MODEL = "deepseek-v4-pro"  # DeepSeek V4 Pro 模型
 BASE_URL = "https://api.deepseek.com"
-BATCH_SIZE = 5  # 每批处理的数据条数
+BATCH_SIZE = 3  # 每批处理的数据条数（检查任务建议保持较小，确保精度）
 OVERWRITE_CHECKPOINT = False  # 是否从头开始（False 则从断点续传）
 MAX_RETRIES = 3  # 单批最大重试次数
 RETRY_DELAY = 10  # 重试间隔（秒）
@@ -20,24 +19,24 @@ if not API_KEY:
     raise ValueError("请先设置环境变量 DEEPSEEK_API_KEY")
 
 # -------------------- 文件路径 --------------------
-PROMPT_FILE = "prompt_intro.txt"
-INPUT_FILE = "../correct/llm_fixed_dev.json"
-OUTPUT_DATA = "processed_data.json"
-OUTPUT_LOG = "change_log.json"
-CHECKPOINT_FILE = "checkpoint.json"
+PROMPT_FILE = "check_prompt.txt"  # 质量检查提示词文件
+INPUT_FILE = "../processed_data.json"  # 待检查的输入数据
+OUTPUT_DATA = "processed_data_check.json"  # 修正后的输出数据
+OUTPUT_LOG = "change_log.json"  # 变更日志
+CHECKPOINT_FILE = "checkpoint_check.json"  # 检查任务断点文件
 
-# -------------------- 读取提示词模板 --------------------
+# -------------------- 读取提示词 --------------------
 with open(PROMPT_FILE, "r", encoding="utf-8") as f:
     system_prompt = f.read()
 
-# 追加输出格式要求
+# 追加输出格式强制要求（确保模型严格遵循）
 system_prompt += (
     "\n\nIMPORTANT: You must output the result as a JSON object enclosed in a ```json code block. "
     "The JSON must contain exactly two fields: \"processed_data\" (array) and \"change_log\" (array). "
     "Do not include any other text outside the code block."
 )
 
-# -------------------- 读取原始数据集 --------------------
+# -------------------- 读取待检查数据集 --------------------
 with open(INPUT_FILE, "r", encoding="utf-8") as f:
     dataset = json.load(f)
 
@@ -73,26 +72,26 @@ for idx in range(start_batch, len(batches)):
     batch = batches[idx]
     print(f"\n正在处理第 {idx + 1}/{len(batches)} 批，包含 {len(batch)} 条数据...")
 
-    user_message = f"Here is a batch of data to process:\n```json\n{json.dumps(batch, ensure_ascii=False, indent=2)}\n```\nPlease output the result exactly as specified."
+    user_message = (
+        f"Here is a batch of data to inspect and correct:\n"
+        f"```json\n{json.dumps(batch, ensure_ascii=False, indent=2)}\n```\n"
+        f"Please inspect every item strictly according to the rules, correct all issues, "
+        f"and output the result exactly as specified."
+    )
 
     success = False
     for attempt in range(MAX_RETRIES):
         try:
-            # 思考模式 API 调用
             response = client.chat.completions.create(
                 model=MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_message}
                 ],
-                reasoning_effort="high",  # 思考强度
-                extra_body={"thinking": {"type": "enabled"}},  # 启用思考模式
                 stream=False
             )
 
             answer = response.choices[0].message.content.strip()
-            # 思考内容可通过 response.choices[0].message.reasoning_content 获取（如需要）
-
             print("API 返回成功，正在解析 JSON...")
 
             # 提取 JSON
@@ -107,7 +106,14 @@ for idx in range(start_batch, len(batches)):
             if "processed_data" not in result or "change_log" not in result:
                 raise ValueError("返回结果缺少 processed_data 或 change_log 字段")
 
-            # 收集本批数据
+            # # 校验：本批次的所有 id 必须都出现在 processed_data 中（禁止删除）
+            # batch_ids = {item["id"] for item in batch}
+            # returned_ids = {item["id"] for item in result["processed_data"]}
+            # missing_ids = batch_ids - returned_ids
+            # if missing_ids:
+            #     raise ValueError(f"检测到数据被删除，缺失 id: {missing_ids}。禁止删除任何数据！")
+
+            # 收集本批结果
             processed_data.extend(result["processed_data"])
             change_log.extend(result["change_log"])
 
@@ -128,6 +134,11 @@ for idx in range(start_batch, len(batches)):
             if attempt < MAX_RETRIES - 1:
                 print(f"  等待 {RETRY_DELAY} 秒后重试...")
                 time.sleep(RETRY_DELAY)
+        except ValueError as e:
+            print(f"  数据校验失败 (尝试 {attempt + 1}/{MAX_RETRIES}): {e}")
+            if attempt < MAX_RETRIES - 1:
+                print(f"  等待 {RETRY_DELAY} 秒后重试...")
+                time.sleep(RETRY_DELAY)
         except Exception as e:
             print(f"  API 调用失败 (尝试 {attempt + 1}/{MAX_RETRIES}): {e}")
             if attempt < MAX_RETRIES - 1:
@@ -135,7 +146,7 @@ for idx in range(start_batch, len(batches)):
                 time.sleep(RETRY_DELAY)
 
     if not success:
-        # 即使失败也保存当前断点，方便人工检查
+        # 保存当前断点，方便人工检查
         with open(CHECKPOINT_FILE, "w", encoding="utf-8") as f:
             json.dump({
                 "processed_data": processed_data,

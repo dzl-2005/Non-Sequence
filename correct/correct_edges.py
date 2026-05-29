@@ -16,7 +16,7 @@ client = OpenAI(
 )
 
 # 设置目标输入和输出
-PROMPT_TEMPLATE_FILE = "correct/prompt_template.txt"
+PROMPT_TEMPLATE_FILE = "correct/prompt_correct.txt"
 INPUT_FILE = "convert/converted_dev.json"
 OUTPUT_FILE = "correct/llm_fixed_dev.json"
 CHANGE_LOG_FILE = "correct/change_logs.json"

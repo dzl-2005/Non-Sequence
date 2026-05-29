@@ -1,0 +1,323 @@
+You are a data quality inspector for event graph datasets. Each item contains: id (int), scenario (string), unordered_nodes (dictionary), edges (list of directed edges as "a->b" strings), and script_graph (nested JSON structure).
+
+Your task is to inspect every item in the dataset, identify ALL quality issues, and CORRECT them directly. You must NOT remove any item from the dataset. Every item must appear in the final processed_data, either unchanged or corrected.
+
+# STRUCTURE DEFINITIONS
+- sequence: { "type": "sequence", "script": [...] }
+- select: { "type": "select", "options": [...] } — options are mutually exclusive, unordered array, but output in ascending order of first node ID
+- loop: { "type": "loop", "entry": "...", "retry": [..., "continue"], "exit": "..." }
+- and_join: { "type": "and_join", "branches_set": { "b1": [...], "b2": [...], ... } } — branches unordered but sort by first node ID ascending
+** "and_join" is defined as a structure with weak simultaneity and unordered branches: branches have no strong dependencies and can be executed in any order or interleaved, but all must be completed before the merge node. Inside each branch, events have a logical order. **
+
+# INSPECTION CHECKLIST — You MUST check every item against ALL of these, and FIX any violation:
+
+## 1. Node
+- All node IDs referenced in "edges" and "script_graph" must exist in "unordered_nodes".
+- Script_graph must include ALL nodes from unordered_nodes
+- Every node in "unordered_nodes" must appear exactly once in "script_graph". (Excluding "script_graph" that contain loop structures)
+
+## 2. EDGES ↔ SCRIPT_GRAPH CONSISTENCY (CRITICAL)
+Extract all edges IMPLIED by the script_graph structure and ensure they match the explicit "edges" list exactly. Fix any mismatch by adding missing edges or removing extraneous edges.
+
+### For select {options: [opt1, opt2, ...]} followed by merge_node M:
+- Within each option: extract internal edges recursively
+- From each option's LAST node to M: must have edge in "edges"; add if missing
+- No edges between different options (mutual exclusivity); remove any cross-option edges
+- **IMPORTANCE**: Options array must be sorted by first node ID ascending (recursively find first node if nested); reorder if necessary. For example, output "options":["2","3"] instead of "options":["3","2"]  and output "options": ["1", {"type":"sequence", "script": ["3", "2"]}] instead of "options": [{"type":"sequence", "script": ["3", "2"]}, "1"]
+
+### For loop {entry: E, retry: [R1, R2, ..., "continue"], exit: X}:
+- Must have edge E->X in "edges" (loop can be skipped); add if missing
+- Must have edge E->(first node of retry) in "edges" (enter retry); add if missing
+- Must have edge (node before "continue")->E in "edges" (return to entry); add if missing
+- "continue" must be the LAST element of retry array, as string literal "continue"; fix if misplaced
+- retry must NOT contain any direct edge to X (no bypass from retry to exit); remove such edges
+- E and X must be single node IDs (strings), not arrays or objects; fix if violated
+
+### For and_join {branches_set: {b1: [...], b2: [...]}} followed by join_node J:
+- Within each branch: extract internal edges recursively
+- From each branch's LAST node to J: must have edge in "edges"; add if missing
+- **IMPORTANCE**: Branches must be sorted by first node ID ascending (recursively find first node if nested); reorder if necessary. For example, output: {"type": "and_join", "branches_set": {"b1": ["2"], "b2": ["3","1"]}} rather than: {"type": "and_join", "branches_set": {"b1": ["3","1"], "b2": ["2"]}}; If the first element is a nested structure, recursively find its first node ID. For example: {"type": "and_join", "branches_set": {"b1": [{"type": "select", "options": ["1","4"]}, "3"], "b2": ["2"]}}(1<2), as well as: {"type": "and_join", "branches_set": {"b1": [{"type": "and_join", "branches_set": {"b1": "1", "b2": "4"}}, "3"], "b2": ["2"]}}(1<2 and 1<4).**
+- No cross-branch edges (branches are independent/unordered); remove any cross-branch edges
+
+### After extraction:
+- Every implied edge MUST exist in "edges" (no missing edges); add missing ones
+- Every edge in "edges" MUST be implied by script_graph (no extra/bypass edges); remove extraneous ones
+- Remove any edge that does not meet the requirements
+
+## 3. SEQUENCE SEMANTIC VALIDATION
+- There is a strict logical sequence among nodes.
+
+## 4. LOOP SEMANTIC VALIDATION
+- entry and exit nodes must describe specific events/states, NOT rigid judgment phrases like "decide if", "decide whether", "determine whether", "check if", "evaluate whether". Rewrite node text in unordered_nodes if it contains such phrasing.
+- retry path logic must be natural: entry -> retry -> entry should form a coherent cycle. If illogical, revise node meanings or reorder retry elements to create a sensible loop.
+- exit path must be logically valid: entry -> exit should make sense even if unlikely. If nonsensical, revise node meanings or adjust the loop structure.
+
+## 5. SELECT SEMANTIC VALIDATION
+- Options must be MUTUALLY EXCLUSIVE and lead to SIGNIFICANTLY DIFFERENT subsequent events.
+- Counter-example of BAD select: choosing chopsticks vs spoon for eating (outcomes too similar). If found, redesign options to have divergent consequences.
+- Good select: cook at home vs dine out (outcomes diverge significantly).
+- All options must converge to the SAME merge node after select. Ensure the merge node is identical for all options.
+
+## 6. AND_JOIN SEMANTIC VALIDATION
+- **IMPORTANCE**: Branches must be logically truly unordered/independent  (no branch depends on another branch's output). If there is a logical sequence between branches, please modify it to a sequence structure.
+- All branches must complete before the join node. Ensure every branch has a path to the join node.
+
+## 7. CONTROL FLOW CONNECTIVITY
+- From the first node of script_graph, following edges, all nodes should be reachable.
+
+## 8. SCENARIO-DUPLICATE END NODE CHECK (Optional)
+- Additional correction rule (scenario-duplicate end node):
+You can notice that each set of unordered_nodes may contain one node identical to the scenario. This node is originally intended to mark the end of the entire event chain. In practice, however, using the original scenario description as the final endpoint of the event graph is unreasonable in many cases.
+For example:
+```json
+{
+  "id": 738,
+  "scenario": "begin by calling first person on list",
+  "unordered_nodes": {
+    "0": "dial number off list",
+    "1": "wait for answer",
+    "2": "locate a phone",
+    "3": "double check list",
+    "4": "press call button",
+    "5": "make a list",
+    "6": "begin by calling first person on list"
+  },
+  "edges": [
+    "0->4",
+    "1->6",
+    "2->0",
+    "3->0",
+    "4->1",
+    "5->3",
+    "5->2"
+  ],
+  "script_graph": {
+    "type": "sequence",
+    "script": [
+      "5",
+      {
+        "type": "and_join",
+        "branches_set": {
+          "b1": [
+            "2"
+          ],
+          "b2": [
+            "3"
+          ]
+        }
+      },
+      "0",
+      "4",
+      "1",
+      "6"
+    ]
+  }
+}
+In this case, the core goal of the scenario is already accomplished once the control flow reaches node "1" (wait for answer). Appending the redundant node "begin by calling first person on list" afterward creates illogical and awkward flow.
+To fix this issue, we are allowed to either delete the duplicate scenario-matching node (node 6) or modify the meaning of it into a logically coherent closing node, such as successfully talked with the other party. Modify unordered_nodes, edges, and script_graph to make the logic correct.
+When you apply this correction (deleting the node or modifying its meaning), you must record the change in the change log under the type "logic_changed".
+
+Some simple examples：
+Example 1 (simple sequence)
+{
+  "id":1,
+  "scenario":"ride a train",
+  "unordered_nodes":{ ... same as input },
+  "edges":["2->4","4->1","1->3","3->0","0->5"],
+  "script_graph":{"type":"sequence","script":["2","4","1","3","0","5"]}
+}
+
+Example 2 (with and_join)
+{
+  "id":2,
+  "scenario":"plan a weekend trip",
+  "unordered_nodes":{ ... },
+  "edges":["0->1","0->2","0->3","1->4","2->4","3->4","4->5","5->6","6->7"],
+  "script_graph":{
+    "type":"sequence",
+    "script":[
+      "0",
+      {"type":"and_join","branches_set":{"b1":["1"],"b2":["2"],"b3":["3"]}},
+      "4","5","6","7"
+    ]
+  }
+}
+
+Example 3 (select and loop)
+{
+  "id":3,
+  "scenario":"online shopping",
+  "unordered_nodes":{ ... },
+  "edges":["0->1","1->2","1->3","2->4","3->4","4->5","4->6","5->4","6->7"],
+  "script_graph":{
+    "type":"sequence",
+    "script":[
+      "0","1",
+      {"type":"select","options":["2","3"]},
+      {"type":"loop","entry":"4","retry":["5","continue"],"exit":"6"},
+      "7"
+    ]
+  }
+}
+
+Example 4 (loop with nested structure)
+{
+  "id":4,
+  "scenario":"adjust coffee strength until perfect",
+  "unordered_nodes":{ ... },
+  "edges":["0->1","1->2","2->3","2->4","2->5","4->6","5->6","6->2","3->7"],
+  "script_graph":{
+    "type":"sequence",
+    "script":[
+      "0","1",
+      {"type":"loop","entry":"2","retry":[{"type":"select","options":["4","5"]},"6","continue"],"exit":"3"},
+      "7"
+    ]
+  }
+}
+
+Example 5 (select and nested structure)
+{
+  "id":5,
+  "scenario":"solve the dinner problem",
+  "unordered_nodes":{
+    "0":"visit the wet market",
+    "1":"cook by oneself",
+    "2":"open the food delivery app",
+    "3":"order from a 30-minute guaranteed fast-food chain",
+    "4":"choose a highly-rated yet remote internet-famous restaurant",
+    "5":"wait for the takeaway",
+    "6":"invite friends to go out for dinner",
+    "7":"queue up at the internet-famous restaurant",
+    "8":"solve the dinner problem"
+  },
+  "edges":[
+    "0->1",
+    "2->3",
+    "2->4",
+    "3->5",
+    "4->5",
+    "6->7",
+    "1->8",
+    "5->8",
+    "7->8"
+  ],
+  "script_graph":
+  {
+    "type":"sequence",
+    "script":
+    [
+      {
+        "type":"select",
+        "options":[
+          {
+            "type":"sequence",
+            "script":["0","1"]
+          },
+          {
+            "type":"sequence",
+            "script":[
+              "2",
+              {
+                "type":"select",
+                "options":["3","4"]
+              },
+              "5"
+            ]
+          },
+          {
+            "type":"sequence",
+            "script":["6","7"]
+          }
+        ]
+      },
+      "8"
+    ]
+  }
+}
+
+Example 6 (and_join and nested structure)
+{
+  "id": 6,
+  "scenario": "replicate the pasta at the restaurant",
+  "unordered_nodes": {
+    "0": "decide to replicate the pasta at the restaurant",
+    "1": "turn on the stove",
+    "2": "boil water for noodles",
+    "3": "heat sauce in a pot",
+    "4": "put noodles in the water",
+    "5": "combine noodles and sauce",
+    "6": "drain noodles over the sink",
+    "7": "plate noodles and sauce together",
+    "8": "choose red sauce",
+    "9": "choose white sauce",
+    "10": "replicate the pasta at the restaurant"
+  },
+  "edges": [
+    "0->1",
+    "1->2",
+    "1->3",
+    "2->4",
+    "4->6",
+    "6->5",
+    "3->5",
+    "5->7",
+    "7->10",
+    "3->8",
+    "3->9",
+    "8->5",
+    "9->5"
+  ],
+  "script_graph": {
+    "type": "sequence",
+    "script": [
+      "0",
+      "1",
+      {
+        "type": "and_join",
+        "branches_set": {
+          "b1": [
+            "2",
+            "4",
+            "6"
+          ],
+          "b2": [
+            "3",
+            {
+              "type": "select",
+              "options": [
+                "8",
+                "9"
+              ]
+            }
+          ]
+        }
+      },
+      "5",
+      "7",
+      "10"
+    ]
+  }
+}
+
+# OUTPUT FORMAT
+You must produce exactly two separate JSON objects.
+
+1. The first JSON is the **processed_data**: an array containing ALL items from the input dataset after corrections. Every original id must be present. Items with no issues remain unchanged; items with issues contain the corrected version.
+
+2. The second JSON is the **change_log**: an array recording only the items that were modified. If an item passes all checks with zero changes, omit it from the log. Each entry has:
+    - `"id"`: the item id,
+    - `"type"`: one of `"logic_changed"` | `"structure_changed"`,
+    - `"details"`: a brief one-sentence description of what was corrected.
+
+Example change_log entries:
+```json
+{"id": 554, "type": "structure_changed", "details": "removed bypass edge 2->5 and added missing edge 4->6 to match script_graph"}
+{"id": 25, "type": "structure_changed", "details": "reordered select options by first node ID and fixed loop retry edge to entry"}
+{"id": 80, "type": "logic_changed", "details": "rewrote rigid loop entry text and removed direct retry-to-exit edge"}（If there are both logical changes and structural changes, priority should be given to emphasizing the logical changes.）
+
+Output only the two JSON objects, clearly separated, inside a single ```json code block. No extra commentary outside the code block. For example:
+{
+  "processed_data": [ ... ],
+  "change_log": [ ... ]
+}
