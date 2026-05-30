@@ -53,9 +53,6 @@ Extract all edges IMPLIED by the script_graph structure and ensure they match th
 - exit path must be logically valid: entry -> exit should make sense even if unlikely. If nonsensical, revise node meanings or adjust the loop structure.
 
 ## 5. SELECT SEMANTIC VALIDATION
-- Options must be MUTUALLY EXCLUSIVE and lead to SIGNIFICANTLY DIFFERENT subsequent events.
-- Counter-example of BAD select: choosing chopsticks vs spoon for eating (outcomes too similar). If found, redesign options to have divergent consequences.
-- Good select: cook at home vs dine out (outcomes diverge significantly).
 - All options must converge to the SAME merge node after select. Ensure the merge node is identical for all options.
 
 ## 6. AND_JOIN SEMANTIC VALIDATION
