@@ -14,3 +14,12 @@
 脚本文件：`count_structure.py`
 
 运行指令：`python count_structure.py -i processed_data.json -o processed_data_with_stats.json`
+
+## 检查数据集结构/逻辑错误
+
+脚本文件：`check.py`
+
+## 文件说明
+
+1. `processed_data` 为最初引入 **select** 和 **loop** 结果的数据，`proceesed_data_check` 是经过 `check.py` 处理过后的数据；`gold` 是经由人工筛选出的 **100** 条高质量数据
+2. 附带后缀 `with_stats` 是在原基础上统计过嵌套深度和结构数量的数据
